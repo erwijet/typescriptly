@@ -1,0 +1,39 @@
+import { OpenPlayground } from "@/Playground.tsx";
+import { Callout } from "nextra/components";
+
+# keys
+
+Gets the strongly-typed keys of the wrapped object.
+
+<Callout type="info">
+  This is functionally equivilant to `Object.keys() as (keyof T)[]`
+</Callout>
+
+```ts copy
+import { obj } from '@typescriply/obj';
+
+const person = {
+  firstName: "Jane",
+  lastName: "Doe",
+  favoriteColor: "Green",
+};
+
+const keys = obj(person).keys;
+//    ^? ('firstName' | 'lastName' | 'favoriteColor')[]
+
+console.log(keys); // ['firstName', 'lastName', 'favoriteColor']
+```
+
+<OpenPlayground
+  code={`
+import { obj } from '@typescriply/obj';
+
+const person = {
+  firstName: "Jane",
+  lastName: "Doe",
+  favoriteColor: "Green",
+};
+
+const keys = obj(person).keys;
+`}
+/>

@@ -1,4 +1,4 @@
-import { DeepUnwind, throwError } from "@typescriptly/core";
+import { DeepUnwind, err } from "@typescriptly/core";
 
 export function arr<T>(size: number, factory: (i: number) => T): TslyArray<T>;
 export function arr<T>(inner: T[]): TslyArray<T>;
@@ -8,7 +8,7 @@ export function arr<T>(
   factory?: (i: number) => T
 ): TslyArray<T> {
   if (Array.isArray(arg)) return new TslyArray(arg);
-  else return TslyArray.factory(arg, factory ?? throwError("missing factory"));
+  else return TslyArray.factory(arg, factory ?? err("missing factory"));
 }
 
 class TslyArray<T> {

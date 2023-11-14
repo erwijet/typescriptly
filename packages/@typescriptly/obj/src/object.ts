@@ -153,8 +153,6 @@ class TslyObject<T extends object> {
 
   /**
    * Maybe get a property on some object, who's type does not define the specified key. If no property is found on the given object at the given key, `null` is returned.
-   *
-   * @category Object
    */
   getUntypedProperty<K extends string, E>(key: K): E | null {
     return (this.inner as Record<K, E | undefined>)[key] ?? null;

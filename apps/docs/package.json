@@ -1,0 +1,30 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "test": ""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@bryx-inc/ts-utils": "^1.68.1",
+    "@codesandbox/sandpack-react": "^2.9.0",
+    "@monaco-editor/react": "^4.6.0",
+    "codesandbox": "^2.2.3",
+    "lucide-react": "^0.292.0",
+    "next": "^14.0.2",
+    "nextra": "^2.13.2",
+    "nextra-theme-docs": "^2.13.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  }
+}

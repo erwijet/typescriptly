@@ -1,0 +1,31 @@
+import { Callout } from "nextra/components";
+
+# into
+
+Calls the given mapping with the wrapped value and returns the result.
+
+<Callout type="info">
+  This is the same functionality as `.take(it => ...)`. It exists here aliased to
+  improve readability when transforming between typescriplty contexts
+</Callout>
+
+```ts copy
+import { obj } from "@typescriptly/obj";
+import { deep } from "@typescriptly/deep";
+
+const person = {
+  name: {
+    first: "John",
+    last: "Smith",
+  },
+  info: {
+    age: 23,
+    state: "NY",
+  },
+};
+
+obj(person)
+  .pickKeys(["name"])
+  .into(deep)
+  .deepkeys.forEach((key) => console.log(key)); // "name.first", "name.last"
+```

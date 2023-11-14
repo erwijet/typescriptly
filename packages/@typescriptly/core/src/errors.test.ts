@@ -1,8 +1,8 @@
-import { throwError } from "./errors";
+import { err } from "./errors";
 
 test("throw error", () => {
     const expr = () => {
-        const _: string = throwError("some message"); // this function should have return type of "string"
+        const _: string = err("some message"); // this function should have return type of "string"
         throw "this should not be reached";
     };
 
@@ -11,5 +11,5 @@ test("throw error", () => {
 
     const objErr = new Error("some error object");
 
-    expect(() => throwError(objErr)).toThrow(objErr);
+    expect(() => err(objErr)).toThrow(objErr);
 });

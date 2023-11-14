@@ -1,0 +1,36 @@
+# take
+
+Retrives the wrapped value
+
+```ts copy
+import { obj } from "@typescriptly/obj";
+
+const person = {
+  first: "John",
+  last: "Smith",
+  age: 23,
+  state: "NY",
+};
+
+const o1 = obj(person).pickKeys(["first"]);
+console.log("first" in o1); // false
+
+const o2 = o1.take();
+console.log("first" in o2); // true
+```
+
+A mapping may also be passed to `take()` for ergonomics
+
+```ts copy
+const personArr = obj(person)
+  .pickKeys(["first"])
+  .into(maybe)
+  .take((it) => [it]);
+console.log(personArr); // [{ first: "John" }]
+
+// .take() can also return void and just execute a method
+
+obj(person)
+  .pickKeys(["first"])
+  .take((it) => console.log(it)); // { first: "John" }
+```

@@ -1,4 +1,4 @@
-import { throwError, Unique } from "@typescriptly/core";
+import { err, Unique } from "@typescriptly/core";
 import { isNone, isSome } from "@typescriptly/maybe";
 
 /**
@@ -140,7 +140,7 @@ export class TslyIter<T> implements Generator<T> {
     };
     return _next(
       this.generator.next().value ??
-        throwError("Cannot reduce an empty iterator")
+        err("Cannot reduce an empty iterator")
     );
   }
 

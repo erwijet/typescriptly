@@ -1,5 +1,5 @@
 import { isNone, isSome, maybe, Nullable } from "./maybe";
-import { pipe, throwError } from "@typescriptly/core";
+import { pipe, err } from "@typescriptly/core";
 
 test("is none", () => {
   expect(isNone(null)).toEqual(true);
@@ -89,7 +89,7 @@ describe("maybe()", () => {
 
     function parse(str: string) {
       return pipe(Number.parseInt(str), (it) =>
-        !Number.isNaN(it) ? it : throwError("Failed to parse")
+        !Number.isNaN(it) ? it : err("Failed to parse")
       );
     }
 
@@ -111,7 +111,7 @@ describe("maybe()", () => {
 
     function parse(str: string) {
       return pipe(Number.parseInt(str), (it) =>
-        !Number.isNaN(it) ? it : throwError("Failed to parse")
+        !Number.isNaN(it) ? it : err("Failed to parse")
       );
     }
 

@@ -10,15 +10,14 @@
  * const res = match(key)
  *  .with("value1", () => "apple")
  *  .with("value2", () => "banana")
- *  .otherwise(() => throwError<string, string>("no valid key. Did you specify the right one?");
+ *  .otherwise(() => err("no valid key. Did you specify the right one?");
  *
  * typeof res; // 'string'
  * ```
  *
- * @param err The error to throw
+ * @param error The error to throw
  *
- * @category Error
  */
-export function throwError<T extends Error | string, R = void>(err: T): R {
-    throw typeof err == "string" ? new Error(err) : err;
+export function err<T extends Error | string, R = void>(error: T): R {
+  throw typeof error == "string" ? new Error(error) : error;
 }

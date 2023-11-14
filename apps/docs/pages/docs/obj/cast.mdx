@@ -1,0 +1,39 @@
+import { Callout } from "nextra/components";
+
+# Cast
+
+Returns the wrapped value, implicitly retyping it object without any restriction or overlap checks
+
+<Callout type="warning">
+  This method is fundementally unsafe. It should be used with great caution and
+  only when typescript can't follow typechecking.
+</Callout>
+
+Often times, this use case crops up when object properies are being checked on an indexed value. In most cases this indexed object should simply be explicitly bound to a variable, but sitations where it cannot, `obj(/* ... */).cast(){:ts}` may be used.
+
+```ts copy
+import { obj } from "@typescriptly/obj";
+
+type Shape2D = {
+  /* ... */
+};
+type Shape3D = {
+  /* ... */
+};
+
+type Shape = { type: "2d"; shape: Shape2D } | { type: "3d"; shape: Shape3D };
+
+function print2dShape(shape: Shape2D) {
+  /* ... */
+}
+function print3dShape(shape: Shape3D) {
+  /* ... */
+}
+
+function printShapeRange(shapes: Shape[], lowerIdx: number, upperIdx: number) {
+  if (shapes[lowerIdx].type == "2d") print2DShape(obj(shapes[lowerIdx]).cast());
+  else print3DShape(obj(shapes[lowerIdx]).cast());
+
+  if (lowerIdx < upperIdx) printShapeRange(shapes, lowerIdx + 1, upperIdx);
+}
+```

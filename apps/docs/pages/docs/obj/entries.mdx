@@ -1,0 +1,42 @@
+import { OpenPlayground } from "@/Playground.tsx";
+import { Callout } from "nextra/components";
+
+# entries
+
+Gets the strongly-typed entries of the wrapped object.
+
+<Callout type="info">
+  This is identical to `Object.entries(){:ts}`, but with entries typed more narrowly than
+   `[string, any][]{:ts}`
+</Callout>
+
+```ts copy
+import { obj } from "@typescriptly/obj";
+
+const person = {
+  firstName: "Jane",
+  lastName: "Doe",
+  age: 21,
+};
+
+const entries = obj(person).entries;
+//    ^? (["firstName", readonly "Jane"] | ["lastName", readonly "Doe"] | ["age", number])[]
+
+console.log(entries); // [["firstName", "Jane"], ["lastName", "Doe"], ["age", 21]]
+```
+
+<OpenPlayground
+  code={`
+import { obj } from "@typescriptly/obj";
+
+const person = {
+firstName: "Jane",
+lastName: "Doe",
+age: 21,
+};
+
+const entries = obj(person).entries;
+
+console.log(entries);
+`}
+/>
