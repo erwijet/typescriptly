@@ -3,6 +3,7 @@
   "globalDependencies": ["**/.env.*local"],
   "pipeline": {
     "test": {},
+    "typecheck": {},
     "publish-packages": {},
     "build": {
       "dependsOn": ["^build"],

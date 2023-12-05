@@ -5,7 +5,7 @@ import { OpenPlayground } from "@/Playground.tsx";
 Attempt to get a property from the wrapped object with some arbitrary string key. If no property is found on the given object at the given key, `null` is returned.
 
 ```ts copy
-import { obj } from "@typescriptly/obj";
+import { obj } from "@tsly/obj";
 
 type Gizmo = { type: "polygon"; sides: number } | { type: "point" };
 
@@ -21,7 +21,7 @@ console.log(sides ?? "no sides");
 
 <OpenPlayground
   code={`
-import { obj } from "@typescriptly/obj";
+import { obj } from "@tsly/obj";
 
 type Gizmo = { type: "polygon"; sides: number } | { type: "point" };
 

@@ -1,5 +1,5 @@
 export default {
-    logo: <span>Typescriptly Docs</span>,
+    logo: <span>tsly Docs</span>,
     project: {
       link: 'https://github.com/bryx-inc/ts-utils'
     }
