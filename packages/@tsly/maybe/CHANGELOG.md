@@ -1,5 +1,11 @@
 # @tsly/maybe
 
+## 1.2.0
+
+### Minor Changes
+
+- cc6b661: Add support for non-nullable union subsets
+
 ## 1.1.0
 
 ### Minor Changes
