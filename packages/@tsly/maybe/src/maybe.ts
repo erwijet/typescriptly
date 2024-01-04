@@ -15,25 +15,13 @@ export function isSome<T>(m: Nullable<T>): m is NonNullable<T> {
 
 // ## //
 
-type CoalescableMaybe<T> = T extends T
-  ? T extends null | undefined
-    ? T
-    : Maybe<NonNullable<T>>
-  : never;
+type CoalescableMaybe<T> =
+  | Maybe<NonNullable<T>>
+  | (T extends T ? (T extends null | undefined ? null : never) : never);
 
 export function maybe<T>(inner: T): CoalescableMaybe<T> {
-  if (inner == null)
-    return null as T extends T
-      ? T extends null | undefined
-        ? T
-        : Maybe<NonNullable<T>>
-      : never;
-  else
-    return new Maybe(inner) as T extends T
-      ? T extends null | undefined
-        ? T
-        : Maybe<NonNullable<T>>
-      : never;
+  if (inner == null) return null as CoalescableMaybe<T>;
+  else return new Maybe(inner) as CoalescableMaybe<T>;
 }
 
 class Maybe<T> {
