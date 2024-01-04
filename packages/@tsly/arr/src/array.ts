@@ -1,16 +1,5 @@
 import { DeepUnwind, err } from "@tsly/core";
 
-export function arr<T>(size: number, factory: (i: number) => T): TslyArray<T>;
-export function arr<T>(inner: T[]): TslyArray<T>;
-
-export function arr<T>(
-  arg: number | T[],
-  factory?: (i: number) => T
-): TslyArray<T> {
-  if (Array.isArray(arg)) return new TslyArray(arg);
-  else return TslyArray.factory(arg, factory ?? err("missing factory"));
-}
-
 class TslyArray<T> {
   constructor(private inner: T[]) {}
 
@@ -292,7 +281,7 @@ class TslyArray<T> {
    *
    * @category Array
    */
-  static factory<T>(size: number, by: (i: number) => T): TslyArray<T> {
+  static fromFactory<T>(size: number, by: (i: number) => T): TslyArray<T> {
     return arr(new Array(size).fill(null).map((_, i) => by(i)));
   }
 
@@ -314,6 +303,26 @@ class TslyArray<T> {
   }
 
   into<E>(mapping: (it: T[]) => E): E {
-    return this.take(mapping)
+    return this.take(mapping);
   }
 }
+
+function _builder<T>(size: number, factory: (i: number) => T): TslyArray<T>;
+function _builder<T>(inner: T[]): TslyArray<T>;
+
+function _builder<T>(
+  arg1: number | T[],
+  arg2?: (i: number) => T
+): TslyArray<T> {
+  if (Array.isArray(arg1)) return new TslyArray(arg1);
+  else return TslyArray.fromFactory(arg1, arg2 ?? err("missing factory"));
+}
+
+export const arr = Object.assign(_builder, {
+  byReduce: <const>[
+    <T>(tslyArr: TslyArray<T>, cur: T, _idx: number, _self: T[]) => {
+      return tslyArr.merge([cur]);
+    },
+    new TslyArray([] as any[]),
+  ],
+});

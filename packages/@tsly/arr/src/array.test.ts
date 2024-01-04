@@ -98,6 +98,11 @@ test("arr() from factory", () => {
   expect(arr(5, (i) => i).take()).toEqual([0, 1, 2, 3, 4]);
 });
 
+test("arr.byReduce", () => {
+  const fruits = ["apple", "orange", "grape", "pear"];
+  expect(fruits.reduce(...arr.byReduce).take()).toEqual(fruits);
+});
+
 test("dropIdx()", () => {
   const fruits = ["apple", "banana", "orange"];
   expect(arr(fruits).dropIdx(1).take()).toEqual(["apple", "orange"]);

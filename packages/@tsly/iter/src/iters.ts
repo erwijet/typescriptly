@@ -139,8 +139,7 @@ export class TslyIter<T> implements Generator<T> {
       else return _next(func(val, next.value));
     };
     return _next(
-      this.generator.next().value ??
-        err("Cannot reduce an empty iterator")
+      this.generator.next().value ?? err("Cannot reduce an empty iterator")
     );
   }
 
@@ -247,7 +246,7 @@ export class TslyIter<T> implements Generator<T> {
    * ```
    */
   nth(n: number): T | null {
-    rangeIter(0, n - 1).forEach(() => this.next());
+    iter.range(0, n - 1).forEach(() => this.next());
     return this.next().value ?? null;
   }
 
@@ -631,34 +630,6 @@ export class TslyIter<T> implements Generator<T> {
 }
 
 /**
- * @generator
- *
- * Generates a range of numbers from a lower bound to an optional upper bound.
- *
- * !> Note: When providing bounds of a very large interval, this generator may result in stack overflow errors due to excessive recursion.
- *
- *
- * @param {number} lower - The lower bound of the range.
- * @param {number} upper - The upper bound of the range (inclusive).
- * @returns {Generator<number>} A generator yielding the numbers in the specified range.
- *
- * @example
- * ```ts
- * for (const i of rangeIter(-5, 10)) {
- *  console.log(i); // -5, -4, -3, -2, ... 9, 10
- * }
- * ```
- *
- * @category Iterator
- */
-export function rangeIter(lower: number, upper: number): TslyIter<number> {
-  return iter(function* () {
-    yield lower;
-    if (lower < upper) yield* rangeIter(lower + 1, upper);
-  });
-}
-
-/**
  * Creates a {@link TslyIter} from a generator function
  *
  * @example
@@ -672,7 +643,7 @@ export function rangeIter(lower: number, upper: number): TslyIter<number> {
  * @param val - The generator function to construct the iterator with
  * @returns A new {@link TslyIter} instance based on the provided input.
  */
-export function iter<T>(val: () => Generator<T, void, unknown>): TslyIter<T>;
+function _builder<T>(val: () => Generator<T, void, unknown>): TslyIter<T>;
 /**
  * Creates a {@link TslyIter} from an existing generator
  *
@@ -692,7 +663,7 @@ export function iter<T>(val: () => Generator<T, void, unknown>): TslyIter<T>;
  * @param val - The generator to construct the iterator with
  * @returns A new {@link TslyIter} instance based on the provided input.
  */
-export function iter<T>(val: Generator<T, void, unknown>): TslyIter<T>;
+function _builder<T>(val: Generator<T, void, unknown>): TslyIter<T>;
 /**
  * Creates a {@link TslyIter} from an array.
  *
@@ -707,7 +678,7 @@ export function iter<T>(val: Generator<T, void, unknown>): TslyIter<T>;
  * @param val - The array to construct the iterator with
  * @returns A new {@link TslyIter} instance based on the provided input.
  */
-export function iter<T>(val: T[]): TslyIter<T>;
+function _builder<T>(val: T[]): TslyIter<T>;
 /**
  * Creates a {@link TslyIter} from an array.
  *
@@ -722,7 +693,7 @@ export function iter<T>(val: T[]): TslyIter<T>;
  * @param val - The array to construct the iterator with
  * @returns A new {@link TslyIter} instance based on the provided input.
  */
-export function iter<T>(val: ReadonlyArray<T>): TslyIter<T>;
+function _builder<T>(val: ReadonlyArray<T>): TslyIter<T>;
 /**
  * Creates a {@link TslyIter} from an existing, raw {@link Iterator}
  *
@@ -737,10 +708,31 @@ export function iter<T>(val: ReadonlyArray<T>): TslyIter<T>;
  * @param val - The iterator to use
  * @returns A new {@link Iterator} instance based on the provided input.
  */
-export function iter<T>(val: Iterator<T, void, unknown>): TslyIter<T>;
+function _builder<T>(val: Iterator<T, void, unknown>): TslyIter<T>;
+
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export function iter<T>(val: any): TslyIter<T> {
+function _builder<T>(val: any): TslyIter<T> {
   if (typeof val == "function") return TslyIter.fromGeneratorFn(val);
   if (Array.isArray(val)) return TslyIter.fromArr(val);
   else return TslyIter.fromIter(val);
 }
+
+export const iter = Object.assign(_builder, {
+  byReduce: <const>[
+    <T>(iter: TslyIter<T>, cur: T, _idx: number, _self: T[]) => {
+      return iter.chain(TslyIter.fromArr([cur]));
+    },
+    TslyIter.fromArr([] as any[]), // eslint-disable-line @typescript-eslint/no-explicit-any
+  ],
+  range: (lower: number, upperIncl: number) => {
+    const arr = [lower];
+
+    while (
+      (arr.at(-1) ?? err<string, number>("expected non-empty array")) <
+      upperIncl
+    )
+      arr.push(arr.at(-1)! + 1);
+
+    return TslyIter.fromArr(arr);
+  },
+});
