@@ -11,7 +11,7 @@ Deeply clones the wrapped object via the JSON serialize/deserialize method.
 </Callout>
 
 ```ts copy
-import { obj } from "@typescriply/obj";
+import { obj } from "@tsly/obj";
 
 const gizmo = { name: "gizmo", extraInfo: { tags: ["tag1", "tag2"] } };
 
@@ -27,7 +27,7 @@ shallowClone.extraInfo.tags == gizmo.extraInfo.tags; // true
 ```
 
 <OpenPlayground code={`
-import { obj } from "@typescriply/obj";
+import { obj } from "@tsly/obj";
 
 const gizmo = { name: "gizmo", extraInfo: { tags: ["tag1", "tag2"] } };
 
