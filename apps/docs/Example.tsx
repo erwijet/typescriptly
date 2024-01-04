@@ -44,30 +44,9 @@ function MonacoEditor() {
   );
 }
 
-// export const Example = () => {
-//   return (
-//     <SandpackProvider
-//       template="react-ts"
-//       customSetup={{
-//         dependencies: {
-//           "@bryx-inc/ts-utils": "latest",
-//         }
-//       }}
-//     >
-//       <SandpackLayout
-//         theme="dark"
-//         style={{ border: "none", borderRadius: "4px" }}
-//       >
-//         <MonacoEditor />
-//         <SandpackPreview />
-//       </SandpackLayout>
-//     </SandpackProvider>
-//   );
-// };
-
 export const Example = (props: { code: string }) => {
   const files = {
-    "index.ts": props.code
+    "index.ts": props.code,
   };
 
   return (

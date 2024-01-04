@@ -1,7 +1,7 @@
 {
   "name": "@tsly/deep",
   "version": "1.1.0",
-  "repository": "git@github.com:bryx-inc/ts-utils.git",
+  "repository": "git@github.com:bryx-inc/typescriptly.git",
   "author": "Tyler Holewinski <tyler.holewinski@bryx.com>",
   "license": "MIT",
   "scripts": {
@@ -26,12 +26,12 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
+    "@tsly/core": "workspace:*",
     "@types/jest": "^29.5.8",
     "@types/node": "^20.9.0",
     "@types/react": "^18.0.26",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
-    "@tsly/core": "workspace:*",
     "eslint": "^8.30.0",
     "gulp": "^4.0.2",
     "jest": "^29.3.1",

@@ -26,25 +26,10 @@ class TslyObject<T extends object> {
   constructor(private inner: T) {}
 
   /**
-   * Return the keys of the given object an array.
+   * The strongly-typed keys of the wrapped object
    *
-   * ?> This is identical to `Object.keys()`, except this method types it's return type as `(keyof T)[]`, rather than `string | number | symbol`.
-   *
-   * @example
-   * ```ts
-   * const person = {
-   *   firstName: 'Jane',
-   *   lastName: 'Doe',
-   *   favoriteColor: 'Green'
-   * }
-   *
-   * const keys = getObjKeys(person);
-   * //    ^? ('firstName' | 'lastName' | 'favoriteColor')[]
-   * ```
-   * @param v The given object
-   * @returns The array of keys
-   *
-   * @category Object
+   * @since 1.0.0
+   * @see https://tsly.bryxinc.dev/docs/obj/keys
    */
   get keys(): (keyof T)[] {
     return Object.keys(this.inner) as (keyof T)[];
@@ -52,24 +37,6 @@ class TslyObject<T extends object> {
 
   /**
    * Returns the entries for a given object
-   *
-   * ?> This is identical to `Object.entries()`, except this method types the resulting value more narrowly than `[string, any][]`
-   *
-   * @example
-   * ```ts
-   * const person = {
-   *   firstName: 'Jane' as const,
-   *   lastName: 'Doe' as const,
-   *   favoriteColor: 'Green',
-   *   age: 21
-   * }
-   *
-   * const entries = getObjEntries(person);
-   * //    ^? (["firstName", readonly "Jane"] | ["lastName", readonly "Doe"] | ["favoriteColor", string] | ["age", number])[]
-   * ```
-   *
-   * @param v The given object
-   * @returns The array of entries
    */
   get entries(): Entries<T> {
     return Object.entries(this.inner) as Entries<T>;

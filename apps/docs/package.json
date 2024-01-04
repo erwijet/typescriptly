@@ -1,6 +1,7 @@
 {
   "name": "docs",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,7 +14,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@bryx-inc/ts-utils": "^1.68.1",
     "@codesandbox/sandpack-react": "^2.9.0",
     "@monaco-editor/react": "^4.6.0",
     "codesandbox": "^2.2.3",

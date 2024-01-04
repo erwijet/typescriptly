@@ -1,7 +1,7 @@
 {
   "name": "@tsly/iter",
   "version": "1.0.1",
-  "repository": "git@github.com:bryx-inc/ts-utils.git",
+  "repository": "git@github.com:bryx-inc/typescriptly.git",
   "author": "Tyler Holewinski <tyler.holewinski@bryx.com>",
   "license": "MIT",
   "scripts": {
