@@ -1,5 +1,12 @@
 # @tsly/iter
 
+## 1.1.0
+
+### Minor Changes
+
+- 6caaf3e: - Reimplement `rangeIter` non-recursivly as `iter.range`
+  - Introduce `arr.byReduce` and `iter.byReduce` builders
+
 ## 1.0.2
 
 ### Patch Changes
