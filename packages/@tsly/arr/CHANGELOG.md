@@ -1,5 +1,11 @@
 # @tsly/arr
 
+## 1.1.1
+
+### Patch Changes
+
+- d7bc5c6: Unwrapped TslyArray now correctly publish a `[Symbol.iterator]` for `for-of` loops
+
 ## 1.1.0
 
 ### Minor Changes
