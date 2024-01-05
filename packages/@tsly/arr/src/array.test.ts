@@ -5,6 +5,20 @@ function assertNoSideEffects(baseArr: unknown[], newArr: unknown[]) {
   expect(baseArr).not.toBe(newArr);
 }
 
+test("for-of iterator", () => {
+  const fruit = arr(["apple", "banana", "pear"]);
+  const fn = jest.fn();
+
+  for (const each of fruit) {
+    fn(each);
+  }
+
+  expect(fn).toHaveBeenCalledTimes(fruit.take().length);
+  fruit.take().forEach(el => {
+    expect(fn).toHaveBeenCalledWith(el);
+  })
+});
+
 test("moveToIdx()", () => {
   const fruit = ["apple", "banana", "orange", "pear", "kiwi"];
   const newArr = arr(fruit).moveToIdx(1, 3).take();
@@ -174,3 +188,4 @@ describe("merge()", () => {
     expect(mergedArray.length).toEqual(5);
   });
 });
+

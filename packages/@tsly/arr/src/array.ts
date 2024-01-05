@@ -288,7 +288,7 @@ class TslyArray<T> {
   //
 
   [Symbol.iterator]() {
-    return this.inner[Symbol.iterator];
+    return this.inner[Symbol.iterator]();
   }
 
   get isEmpty() {
