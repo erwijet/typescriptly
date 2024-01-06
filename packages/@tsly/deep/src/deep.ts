@@ -187,7 +187,10 @@ class DeepObject<T extends object> {
       return Object.keys(o).flatMap((k) => {
         const v = o[k as keyof T];
 
-        if (Array.isArray(v) && v.some((el) => typeof el == "object")) {
+        if (
+          Array.isArray(v) &&
+          v.some((el) => typeof el == "object")
+        ) {
           v.reduce((last, cur) => {
             if (JSON.stringify(obj(last).keys) != JSON.stringify(obj(cur).keys))
               throw new Error(
@@ -201,7 +204,7 @@ class DeepObject<T extends object> {
           return [prefix + k, ..._next(v[0], k + ".").map((k) => prefix + k)];
         }
 
-        if (typeof v == "object" && !Array.isArray(v))
+        if (typeof v == "object" && !Array.isArray(v) && v != null)
           return [
             prefix + k,
             ..._next(v as object, k + ".").map((k) => k + prefix),

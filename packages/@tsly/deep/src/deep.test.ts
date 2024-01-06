@@ -34,6 +34,8 @@ test("deep().deepkeys", () => {
     "emptyKey",
   ]);
 
+  expect(deep({ a: 1, b: { c: null } }).deepkeys).toEqual(['a', 'b', 'b.c']);
+
   expect(() => deep({ parent: [{ a: "a" }, { b: "b" }] }).deepkeys).toThrow(
     "Tried to call getDeepObjKeys with an array subobject that does not have a well-defined structure: a != b"
   );
