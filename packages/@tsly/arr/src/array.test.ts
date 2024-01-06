@@ -14,9 +14,9 @@ test("for-of iterator", () => {
   }
 
   expect(fn).toHaveBeenCalledTimes(fruit.take().length);
-  fruit.take().forEach(el => {
+  fruit.take().forEach((el) => {
     expect(fn).toHaveBeenCalledWith(el);
-  })
+  });
 });
 
 test("moveToIdx()", () => {
@@ -82,14 +82,6 @@ test("insertAt()", () => {
 
   expect(newArr).toEqual(["one", "two", "foo", "three"]);
   assertNoSideEffects(things, newArr);
-});
-
-test("replaceAt()", () => {
-  const nums = [1, 2, 3];
-  const newArr = arr(nums).replaceAt(1, 9).take();
-
-  expect(newArr).toEqual([1, 9, 3]);
-  assertNoSideEffects(nums, newArr);
 });
 
 test("clone()", () => {

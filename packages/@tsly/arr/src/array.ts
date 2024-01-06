@@ -135,17 +135,6 @@ class TslyArray<T> {
   }
 
   /**
-   * Creates a copy of some array, with some value at the given index replaced with the given value
-   */
-  replaceAt(idx: number, v: T): TslyArray<T> {
-    if (!this.hasIdx(idx)) return this.clone();
-
-    const cpy = this.clone().take();
-    cpy[idx] = v;
-    return arr(cpy);
-  }
-
-  /**
    * Construct a new array equal to the given array with the data at the given index excluded. The source array is left unmodified.
    *
    * @example
