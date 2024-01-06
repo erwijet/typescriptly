@@ -1,5 +1,12 @@
 # @tsly/arr
 
+## 1.2.0
+
+### Minor Changes
+
+- 5c9a447: - Removed `replaceAt` in favor of ECMA2023 `Array.prototype.with`
+  - Updated `dedup` to optionally accept a custom equality method
+
 ## 1.1.1
 
 ### Patch Changes
