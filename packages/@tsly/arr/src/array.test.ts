@@ -150,6 +150,19 @@ describe("dedup()", () => {
     const deduped = arr(nums).dedup().take();
     expect(deduped).toEqual([3, 1, 2, 4]);
   });
+
+  it("works with a custom equality function", () => {
+    const things = [
+      { name: "a", val: 1 },
+      { name: "b", val: 2 },
+      { name: "c", val: 1 },
+    ];
+    expect(
+      arr(things)
+        .dedup((a, b) => a.val == b.val)
+        .take()
+    ).toEqual(things.slice(0, 2));
+  });
 });
 
 describe("deep flatten arr", () => {
@@ -180,4 +193,3 @@ describe("merge()", () => {
     expect(mergedArray.length).toEqual(5);
   });
 });
-

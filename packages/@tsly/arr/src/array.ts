@@ -192,8 +192,12 @@ class TslyArray<T> {
    * // returns [1, 2, 3, 4]
    * ```
    */
-  dedup(): TslyArray<T> {
-    return arr(this.inner.filter((cur, i) => this.inner.indexOf(cur) == i));
+  dedup(eq: (a: T, b: T) => boolean = (a, b) => a == b): TslyArray<T> {
+    return arr(
+      this.inner.filter(
+        (cur, i) => this.inner.findIndex((each) => eq(each, cur)) == i
+      )
+    );
   }
 
   /**
