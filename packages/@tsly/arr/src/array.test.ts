@@ -193,3 +193,15 @@ describe("merge()", () => {
     expect(mergedArray.length).toEqual(5);
   });
 });
+
+describe("count()", () => {
+  const fruits = ["apple", "orange", "pear", "banana"];
+
+  it("should equate to Array.prototype.length when no predicate is supplied", () => {
+    expect(arr(fruits).count()).toEqual(fruits.length);
+  });
+
+  it("should return the number of elements matching the supplied predicate", () => {
+    expect(arr(fruits).count((fruit) => fruit.includes("e"))).toEqual(3);
+  });
+});

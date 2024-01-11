@@ -261,6 +261,13 @@ class TslyArray<T> {
     ).dedup();
   }
 
+  /**
+   * Returns the length of the wrapped array. If a predicate is supplied, returns the number of elements matching the predicate.
+   */
+  count(where: (each: T) => boolean = () => true): number {
+    return this.inner.filter(where).length;
+  }
+
   //
 
   /**
