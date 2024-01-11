@@ -1,5 +1,11 @@
 # @tsly/arr
 
+## 1.2.1
+
+### Patch Changes
+
+- 5eb63b0: Introduces `count()`
+
 ## 1.2.0
 
 ### Minor Changes
