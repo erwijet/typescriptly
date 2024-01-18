@@ -1,5 +1,12 @@
 # @tsly/arr
 
+## 1.2.2
+
+### Patch Changes
+
+- Updated dependencies [3f492da]
+  - @tsly/core@1.1.0
+
 ## 1.2.1
 
 ### Patch Changes
