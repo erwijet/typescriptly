@@ -1,5 +1,17 @@
 # @tsly/arr
 
+## 1.4.0
+
+### Minor Changes
+
+- 7300770: Introduces `.toObj()` method which allows arrays to be transformed into tsly objects
+
+## 1.3.0
+
+### Minor Changes
+
+- 7300770: Introduces `.toObj()` method which allows arrays to be transformed into tsly objects
+
 ## 1.2.2
 
 ### Patch Changes
