@@ -18,7 +18,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@tsly/core": "workspace:*"
+    "@tsly/core": "workspace:*",
+    "@tsly/obj": "workspace:*"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",

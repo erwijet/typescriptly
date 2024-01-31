@@ -205,3 +205,33 @@ describe("count()", () => {
     expect(arr(fruits).count((fruit) => fruit.includes("e"))).toEqual(3);
   });
 });
+
+describe("toObj()", () => {
+  it("should properly map keys to values for strings", () => {
+    const fruits = ["apple", "orange", "pear", "banana"];
+
+    expect(
+      arr(fruits)
+        .toObj((each) => each.length)
+        .take()
+    ).toEqual({
+      apple: 5,
+      orange: 6,
+      pear: 4,
+      banana: 6,
+    });
+  });
+
+  it("should filter out non-stringable entries", () => {
+    const fruits = ["apple", null, "orange", 10, undefined] as const;
+    const res = arr(fruits)
+      .toObj((k) => k?.toString().length)
+      .take();
+
+    expect(res).toEqual({
+      apple: 5,
+      orange: 6,
+      10: 2,
+    });
+  });
+});

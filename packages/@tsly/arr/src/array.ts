@@ -1,4 +1,5 @@
-import { DeepUnwind, err } from "@tsly/core";
+import { DeepUnwind, err, pipe } from "@tsly/core";
+import { obj } from "@tsly/obj";
 
 class TslyArray<T> {
   constructor(private inner: T[]) {}
@@ -268,6 +269,33 @@ class TslyArray<T> {
     return this.inner.filter(where).length;
   }
 
+  /**
+   * Converts the array into an object with keys equal to the elements of the array whose values
+   * are specified by the given `mapping` function.
+   *
+   * @note Any elemenets of the array that are not valid object keys will be dropped from the resulting object
+   *
+   * @example
+   * ```ts
+   * const fruits = ["apple", null, "orange", 10, undefined] as const;
+   * arr(fruits)
+   *  .toObj((k) => k?.toString().length)
+   *  .take(console.log);
+   *
+   * // { "apple": 5, "orange": 6, 10: 2 }
+   * ```
+   */
+  toObj<E>(
+    mapping: (k: Extract<T, string | number | symbol>) => E
+  ): ReturnType<typeof obj<Record<Extract<T, string | number | symbol>, E>>> {
+    function isKeylike(v: T): v is Extract<T, string | number | symbol> {
+      return ["string", "number", "symbol"].includes(typeof v);
+    }
+
+    const ents = this.inner.filter(isKeylike).map((k) => [k, mapping(k)]);
+    return obj(Object.fromEntries(ents));
+  }
+
   //
 
   /**
@@ -307,14 +335,23 @@ class TslyArray<T> {
   }
 }
 
+/** @internal */
+function isArray(v: unknown): v is any[] | ReadonlyArray<any> {
+  return Array.isArray(v);
+}
+
 function _builder<T>(size: number, factory: (i: number) => T): TslyArray<T>;
 function _builder<T>(inner: T[]): TslyArray<T>;
+function _builder<T>(inner: ReadonlyArray<T>): TslyArray<T>;
 
 function _builder<T>(
-  arg1: number | T[],
+  arg1: number | T[] | ReadonlyArray<T>,
   arg2?: (i: number) => T
 ): TslyArray<T> {
-  if (Array.isArray(arg1)) return new TslyArray(arg1);
+  if (isArray(arg1))
+    return new TslyArray(
+      arg1 as typeof arg1 extends ReadonlyArray<infer U> ? U[] : typeof arg1
+    );
   else return TslyArray.fromFactory(arg1, arg2 ?? err("missing factory"));
 }
 
