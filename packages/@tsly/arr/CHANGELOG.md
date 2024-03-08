@@ -1,5 +1,13 @@
 # @tsly/arr
 
+## 1.4.1
+
+### Patch Changes
+
+- Updated dependencies [4a303d7]
+  - @tsly/core@1.2.0
+  - @tsly/obj@1.0.0
+
 ## 1.4.0
 
 ### Minor Changes

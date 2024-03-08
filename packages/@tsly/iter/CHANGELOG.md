@@ -1,5 +1,13 @@
 # @tsly/iter
 
+## 1.1.2
+
+### Patch Changes
+
+- Updated dependencies [4a303d7]
+  - @tsly/core@1.2.0
+  - @tsly/maybe@1.2.0
+
 ## 1.1.1
 
 ### Patch Changes

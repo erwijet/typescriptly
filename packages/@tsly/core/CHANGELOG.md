@@ -1,5 +1,11 @@
 # @tsly/core
 
+## 1.2.0
+
+### Minor Changes
+
+- 4a303d7: Add `computed` utility for simple proxy wraps
+
 ## 1.1.0
 
 ### Minor Changes
