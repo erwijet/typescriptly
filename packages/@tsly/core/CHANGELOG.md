@@ -1,5 +1,12 @@
 # @tsly/core
 
+## 1.3.0
+
+### Minor Changes
+
+- 52ffd6c: Adds `AssertSubtype` utility type
+- f3d72b4: Adds `KeyOfType<TObj, TType>` utility type
+
 ## 1.2.0
 
 ### Minor Changes

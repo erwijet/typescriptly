@@ -1,5 +1,15 @@
 # @tsly/arr
 
+## 1.4.2
+
+### Patch Changes
+
+- Updated dependencies [52ffd6c]
+- Updated dependencies [0edfd27]
+- Updated dependencies [f3d72b4]
+  - @tsly/core@1.3.0
+  - @tsly/obj@1.1.0
+
 ## 1.4.1
 
 ### Patch Changes
