@@ -1,4 +1,4 @@
-import { pipe } from "@tsly/core";
+import { KeyOfType, AssertSubtype, pipe, OverrideKeys } from "@tsly/core";
 
 /** @internal */
 type Entries<T extends object> = { [k in keyof T]: [k, T[k]] }[keyof T][];
@@ -209,6 +209,60 @@ class TslyObject<T extends object> {
    */
   cast<E>(): E {
     return this.inner as unknown as E;
+  }
+
+  with<New extends object, Key extends KeyOfType<T, object>>(
+    key: Key,
+    fn: (prev: TslyObject<AssertSubtype<T[Key], object>>) => TslyObject<New>
+  ): TslyObject<
+    OverrideKeys<
+      T,
+      AssertSubtype<{ [_ in Key]: New }, { [k in keyof T]?: unknown }>
+    >
+  >;
+  with<New, Key extends KeyOfType<T, object>>(
+    key: Key,
+    fn: (prev: TslyObject<AssertSubtype<T[Key], object>>) => New
+  ): TslyObject<
+    OverrideKeys<
+      T,
+      AssertSubtype<{ [_ in Key]: New }, { [k in keyof T]?: unknown }>
+    >
+  >;
+  with<New, Key extends keyof T>(
+    key: Key,
+    fn: (prev: T[Key]) => New
+  ): TslyObject<Omit<T, Key> & { [_ in Key]: New }>
+  with<New, Key extends string>(
+    key: Key,
+    value: New
+  ): TslyObject<Omit<T, Key> & { [_ in Key]: New }>
+  with(key: string, arg: unknown) {
+    const inner = this.inner;
+
+    function isKeyOfSelf(k: unknown): k is keyof T {
+      return Object.keys(inner).includes(k as string);
+    }
+
+    if (isKeyOfSelf(key)) {
+      const val = this.inner[key];
+
+      if (typeof arg == "function") {
+        if (typeof val == "object" && !!val) {
+          const newVal = arg(obj(val));
+
+          return obj({
+            ...inner,
+            [key]: newVal instanceof TslyObject ? newVal.take() : newVal,
+          }) as TslyObject<any>;
+        } else {
+          const newVal = arg(val);
+          return obj({ ...inner, [key]: newVal }) as TslyObject<any>;
+        }
+      }
+    }
+
+    return obj({ ...inner, [key]: arg }) as TslyObject<any>;
   }
 
   take(): T;

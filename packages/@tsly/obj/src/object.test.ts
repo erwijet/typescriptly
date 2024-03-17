@@ -159,3 +159,56 @@ test("cast", () => {
 
   expect(obj(people).cast()).toBe(people);
 });
+
+describe("with", () => {
+  const person = obj({
+    name: { first: "john", last: "smith" },
+    age: 25,
+  });
+
+  it("works by passing the selected value as a TslyObject when it's an object", () => {
+    const updated = person.with("name", (name) => {
+      expect(name.take().first).toEqual("john");
+      return name.take().first;
+    });
+
+    expect(updated.take()).toEqual({
+      name: "john",
+      age: 25,
+    });
+  });
+
+  it("auto-unwraps TslyObjects returned from the functor", () => {
+    const updated = person.with("name", (name) => name.with("first", "david"));
+    expect(updated.take()).toEqual({
+      ...person.take(),
+      name: {
+        ...person.take().name,
+        first: "david",
+      },
+    });
+  });
+
+  it("works by passing the selected value directly when not an object", () => {
+    const updated = person.with("age", (age) => {
+      expect(age).toEqual(25);
+      return age + 1;
+    });
+
+    expect(updated.take()).toEqual({
+      ...person.take(),
+      age: 26,
+    });
+  });
+
+  it("directly inserts non-functor values", () => {
+    expect(person.with("age", 30).take()).toEqual({
+      ...person.take(),
+      age: 30,
+    });
+    expect(person.with("hobbies", ["running"]).take()).toEqual({
+      ...person.take(),
+      hobbies: ["running"],
+    });
+  });
+});
