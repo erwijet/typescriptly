@@ -33,3 +33,12 @@ export type RequiredKeys<TObj extends object, K extends keyof TObj> = Required<
   Pick<TObj, K>
 > &
   Omit<TObj, K>;
+
+/**
+ * Extracts keys resolving to a specified type from an object type.
+ */
+export type KeyOfType<
+  TObj extends object,
+  TType,
+  K extends keyof TObj = keyof TObj
+> = K extends K ? (TObj[K] extends TType ? K : never) : never;
