@@ -1,3 +1,4 @@
+export * from "./assert";
 export * from "./explode";
 export * from "./keys";
 export * from "./partial";
