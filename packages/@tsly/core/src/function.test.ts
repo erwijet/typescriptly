@@ -10,17 +10,11 @@ test("create curried guard predicate", () => {
     { empty: false, data: "banana" },
   ];
 
-  const isThingFilledAnd = createCurriedGuardPredicate(
-    ((v) => !v.empty) as ThingIsFilledGuard
-  );
+  const isThingFilledAnd = createCurriedGuardPredicate(((v) => !v.empty) as ThingIsFilledGuard);
 
-  expect(things.some(isThingFilledAnd((v) => v.data == "banana"))).toEqual(
-    true
-  );
+  expect(things.some(isThingFilledAnd((v) => v.data == "banana"))).toEqual(true);
 
-  expect(things.some(isThingFilledAnd((v) => v.data == "other"))).toEqual(
-    false
-  );
+  expect(things.some(isThingFilledAnd((v) => v.data == "other"))).toEqual(false);
 });
 
 test("pipe", () => {
@@ -36,9 +30,7 @@ test("pipe", () => {
   expect(pipe("joe", len, double, double, double, double, double)).toEqual(96);
 
   // this is a forced bad case to test the `default` branch
-  expect(
-    (pipe as any)("joe", len, double, double, undefined, double, double, double)
-  ).toEqual(48);
+  expect((pipe as any)("joe", len, double, double, undefined, double, double, double)).toEqual(48);
 });
 
 test("try or", () => {
@@ -46,6 +38,6 @@ test("try or", () => {
   expect(
     tryOr(() => {
       throw new Error("error");
-    }, "fallback")
+    }, "fallback"),
   ).toEqual("fallback");
 });

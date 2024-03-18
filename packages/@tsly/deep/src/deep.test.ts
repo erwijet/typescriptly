@@ -34,10 +34,10 @@ test("deep().deepkeys", () => {
     "emptyKey",
   ]);
 
-  expect(deep({ a: 1, b: { c: null } }).deepkeys).toEqual(['a', 'b', 'b.c']);
+  expect(deep({ a: 1, b: { c: null } }).deepkeys).toEqual(["a", "b", "b.c"]);
 
   expect(() => deep({ parent: [{ a: "a" }, { b: "b" }] }).deepkeys).toThrow(
-    "Tried to call getDeepObjKeys with an array subobject that does not have a well-defined structure: a != b"
+    "Tried to call getDeepObjKeys with an array subobject that does not have a well-defined structure: a != b",
   );
 });
 
@@ -79,7 +79,7 @@ test("deep().replaceAt()", () => {
   expect(
     deep({ a: {} } as Thing)
       .replaceAt("a.b.c", "foo")
-      .take()
+      .take(),
   ).toEqual({
     a: {},
   });
@@ -87,7 +87,7 @@ test("deep().replaceAt()", () => {
   expect(
     deep({ arr: ["one", "two", "three"] })
       .replaceAt("arr", ["four", "five"])
-      .take()
+      .take(),
   ).toEqual({ arr: ["four", "five"] });
   expect(
     deep({
@@ -97,7 +97,7 @@ test("deep().replaceAt()", () => {
       ],
     })
       .replaceAt("people.name", ["foo", "bar"])
-      .take()
+      .take(),
   ).toEqual({
     people: [
       { name: "foo", age: 12 },
@@ -108,7 +108,7 @@ test("deep().replaceAt()", () => {
   expect(
     deep(obj)
       .replaceAt("orders.items.name", [["one", "two"], ["three"]])
-      .take()
+      .take(),
   ).toEqual({
     firstname: "john",
     lastname: "doe",
@@ -179,10 +179,7 @@ test("deep().get()", () => {
   expect(deep(obj).get("firstname")).toEqual("john");
   expect(deep(obj).get("subobj1.subobj2.deepValue")).toEqual(5);
   expect(deep(obj).get("orders.day")).toEqual(["monday", "wednesday"]);
-  expect(deep(obj).get("orders.items.name")).toEqual([
-    ["gizmo", "thing"],
-    ["guitar"],
-  ]);
+  expect(deep(obj).get("orders.items.name")).toEqual([["gizmo", "thing"], ["guitar"]]);
 });
 
 test("deep().getNested()", () => {

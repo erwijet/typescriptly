@@ -5,7 +5,7 @@ export function str(s: string): TslyStr {
 class TslyStr extends String {
   escapeRegex(): TslyStr {
     return str(
-      this.replace(/[\-\[\]\/\{}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
+      this.replace(/[\-\[\]\/\{}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"),
     ); /* eslint-disable-line no-useless-escape */
   }
 
@@ -14,8 +14,7 @@ class TslyStr extends String {
 
     if (sliced == "") return this; // no match
     if (nth == 0) return str(sliced);
-    else
-      return str(sliced + str(this.slice(sliced.length)).sliceTo(to, nth - 1));
+    else return str(sliced + str(this.slice(sliced.length)).sliceTo(to, nth - 1));
   }
 
   capitalize(): TslyStr {

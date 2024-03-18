@@ -7,7 +7,7 @@ type Entries<T extends object> = { [k in keyof T]: [k, T[k]] }[keyof T][];
 type Flattened<
   T extends object,
   KIden extends string,
-  VIden extends string | undefined = undefined
+  VIden extends string | undefined = undefined,
 > = VIden extends string
   ? {
       [k in keyof T]: {
@@ -114,7 +114,7 @@ class TslyObject<T extends object> {
     return pipe(
       this.keys.filter((k) => keys.includes(k)).map((k) => [k, this.inner[k]]),
       Object.fromEntries,
-      obj
+      obj,
     );
   }
 
@@ -155,26 +155,23 @@ class TslyObject<T extends object> {
    * // [{ name: "bill", age: 38, hobbies: ["cooking"] }, ...]
    * ```
    */
-  flatten<
-    KeyName extends string,
-    ValueName extends string | undefined = undefined
-  >(
+  flatten<KeyName extends string, ValueName extends string | undefined = undefined>(
     keyName: KeyName,
-    valueName?: ValueName
+    valueName?: ValueName,
   ): TslyObject<Flattened<T, KeyName, ValueName>> {
     if (typeof valueName == "string")
       return obj(
         this.entries.map(([k, v]) => ({
           [keyName]: k,
           [valueName]: v,
-        })) as Flattened<T, KeyName, ValueName>
+        })) as Flattened<T, KeyName, ValueName>,
       );
     else
       return obj(
         this.entries.map(([k, v]) => ({
           [keyName]: k,
           ...v,
-        })) as Flattened<T, KeyName, ValueName>
+        })) as Flattened<T, KeyName, ValueName>,
       );
   }
 
@@ -213,30 +210,20 @@ class TslyObject<T extends object> {
 
   with<New extends object, Key extends KeyOfType<T, object>>(
     key: Key,
-    fn: (prev: TslyObject<AssertSubtype<T[Key], object>>) => TslyObject<New>
-  ): TslyObject<
-    OverrideKeys<
-      T,
-      AssertSubtype<{ [_ in Key]: New }, { [k in keyof T]?: unknown }>
-    >
-  >;
+    fn: (prev: TslyObject<AssertSubtype<T[Key], object>>) => TslyObject<New>,
+  ): TslyObject<OverrideKeys<T, AssertSubtype<{ [_ in Key]: New }, { [k in keyof T]?: unknown }>>>;
   with<New, Key extends KeyOfType<T, object>>(
     key: Key,
-    fn: (prev: TslyObject<AssertSubtype<T[Key], object>>) => New
-  ): TslyObject<
-    OverrideKeys<
-      T,
-      AssertSubtype<{ [_ in Key]: New }, { [k in keyof T]?: unknown }>
-    >
-  >;
+    fn: (prev: TslyObject<AssertSubtype<T[Key], object>>) => New,
+  ): TslyObject<OverrideKeys<T, AssertSubtype<{ [_ in Key]: New }, { [k in keyof T]?: unknown }>>>;
   with<New, Key extends keyof T>(
     key: Key,
-    fn: (prev: T[Key]) => New
-  ): TslyObject<Omit<T, Key> & { [_ in Key]: New }>
+    fn: (prev: T[Key]) => New,
+  ): TslyObject<Omit<T, Key> & { [_ in Key]: New }>;
   with<New, Key extends string>(
     key: Key,
-    value: New
-  ): TslyObject<Omit<T, Key> & { [_ in Key]: New }>
+    value: New,
+  ): TslyObject<Omit<T, Key> & { [_ in Key]: New }>;
   with(key: string, arg: unknown) {
     const inner = this.inner;
 

@@ -7,10 +7,7 @@ const config: JestConfigWithTsJest = {
   coverageReporters: ["html", "text", "text-summary", "cobertura"],
   roots: ["src"],
   testEnvironment: "jsdom",
-  testMatch: [
-    "**/__tests__/**/*.+(ts|tsx|js)",
-    "**/?(*.)+(spec|test).+(ts|tsx|js)",
-  ],
+  testMatch: ["**/__tests__/**/*.+(ts|tsx|js)", "**/?(*.)+(spec|test).+(ts|tsx|js)"],
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },

@@ -32,4 +32,8 @@
  *
  * @typeParam T - The array type to unwind.
  */
-export type DeepUnwind<T> = T extends (infer Inner)[] ? DeepUnwind<Inner> : T extends ReadonlyArray<infer Inner> ? DeepUnwind<Inner> : T;
+export type DeepUnwind<T> = T extends (infer Inner)[]
+  ? DeepUnwind<Inner>
+  : T extends ReadonlyArray<infer Inner>
+  ? DeepUnwind<Inner>
+  : T;

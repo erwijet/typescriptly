@@ -1,4 +1,6 @@
-type _RangeTuple<N extends number, R extends unknown[]> = R["length"] extends N ? [R["length"], ...R] : _RangeTuple<N, [R["length"], ...R]>;
+type _RangeTuple<N extends number, R extends unknown[]> = R["length"] extends N
+  ? [R["length"], ...R]
+  : _RangeTuple<N, [R["length"], ...R]>;
 /**
  * A union type comprised of the set of the whole number unit types bounded by L and U inclusively.
  *
@@ -8,7 +10,7 @@ type _RangeTuple<N extends number, R extends unknown[]> = R["length"] extends N 
  * ```
  */
 export type Range<L extends number, U extends number> = (
-    _RangeTuple<U, []> extends [...infer T, ..._RangeTuple<L, []>] ? [...T, L] : never
+  _RangeTuple<U, []> extends [...infer T, ..._RangeTuple<L, []>] ? [...T, L] : never
 ) extends (infer I)[]
-    ? I
-    : never;
+  ? I
+  : never;

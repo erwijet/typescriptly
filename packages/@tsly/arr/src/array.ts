@@ -90,8 +90,7 @@ class TslyArray<T> {
   findFirstAndReplace(toInsert: T, predicate: (v: T) => boolean): TslyArray<T> {
     const inner = this.inner;
     for (const [i, v] of inner.entries())
-      if (predicate(v))
-        return arr(inner.slice(0, i).concat([toInsert], inner.slice(i + 1)));
+      if (predicate(v)) return arr(inner.slice(0, i).concat([toInsert], inner.slice(i + 1)));
     return arr(inner.slice(0));
   }
 
@@ -130,9 +129,7 @@ class TslyArray<T> {
    * ```
    */
   insertAt(idx: number, v: T): TslyArray<T> {
-    return arr(
-      this.inner.slice(0, idx).concat([v]).concat(this.inner.slice(idx))
-    );
+    return arr(this.inner.slice(0, idx).concat([v]).concat(this.inner.slice(idx)));
   }
 
   /**
@@ -194,11 +191,7 @@ class TslyArray<T> {
    * ```
    */
   dedup(eq: (a: T, b: T) => boolean = (a, b) => a == b): TslyArray<T> {
-    return arr(
-      this.inner.filter(
-        (cur, i) => this.inner.findIndex((each) => eq(each, cur)) == i
-      )
-    );
+    return arr(this.inner.filter((cur, i) => this.inner.findIndex((each) => eq(each, cur)) == i));
   }
 
   /**
@@ -232,11 +225,7 @@ class TslyArray<T> {
    */
 
   deepFlatten(): TslyArray<DeepUnwind<T>> {
-    return arr(
-      this.inner.flatMap((el) =>
-        Array.isArray(el) ? arr(el).deepFlatten().take() : el
-      )
-    );
+    return arr(this.inner.flatMap((el) => (Array.isArray(el) ? arr(el).deepFlatten().take() : el)));
   }
 
   /**
@@ -257,9 +246,7 @@ class TslyArray<T> {
    * ```
    */
   merge(...arrs: T[][]): TslyArray<T> {
-    return arr(
-      [this.inner, ...arrs].reduce((acc, cur) => acc.concat(cur))
-    ).dedup();
+    return arr([this.inner, ...arrs].reduce((acc, cur) => acc.concat(cur))).dedup();
   }
 
   /**
@@ -286,7 +273,7 @@ class TslyArray<T> {
    * ```
    */
   toObj<E>(
-    mapping: (k: Extract<T, string | number | symbol>) => E
+    mapping: (k: Extract<T, string | number | symbol>) => E,
   ): ReturnType<typeof obj<Record<Extract<T, string | number | symbol>, E>>> {
     function isKeylike(v: T): v is Extract<T, string | number | symbol> {
       return ["string", "number", "symbol"].includes(typeof v);
@@ -344,14 +331,9 @@ function _builder<T>(size: number, factory: (i: number) => T): TslyArray<T>;
 function _builder<T>(inner: T[]): TslyArray<T>;
 function _builder<T>(inner: ReadonlyArray<T>): TslyArray<T>;
 
-function _builder<T>(
-  arg1: number | T[] | ReadonlyArray<T>,
-  arg2?: (i: number) => T
-): TslyArray<T> {
+function _builder<T>(arg1: number | T[] | ReadonlyArray<T>, arg2?: (i: number) => T): TslyArray<T> {
   if (isArray(arg1))
-    return new TslyArray(
-      arg1 as typeof arg1 extends ReadonlyArray<infer U> ? U[] : typeof arg1
-    );
+    return new TslyArray(arg1 as typeof arg1 extends ReadonlyArray<infer U> ? U[] : typeof arg1);
   else return TslyArray.fromFactory(arg1, arg2 ?? err("missing factory"));
 }
 

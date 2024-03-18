@@ -46,9 +46,7 @@ describe("Chainable Iterator", () => {
 
     expect(iter(func).collect()).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
     expect(iter(func()).collect()).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-    expect(iter([1, 2, 3, 4, 5][Symbol.iterator]()).collect()).toEqual([
-      1, 2, 3, 4, 5,
-    ]);
+    expect(iter([1, 2, 3, 4, 5][Symbol.iterator]()).collect()).toEqual([1, 2, 3, 4, 5]);
     expect(iter([1, 2, 3, 4, 5]).collect()).toEqual([1, 2, 3, 4, 5]);
 
     const fn = jest.fn();
@@ -96,9 +94,14 @@ describe("Chainable Iterator", () => {
   });
 
   it("should properly apply the 'map' function", () => {
-    expect([
-      ...iter.range(0, 5).map((val) => (val % 2 == 0 ? "even" : "odd")),
-    ]).toEqual(["even", "odd", "even", "odd", "even", "odd"]);
+    expect([...iter.range(0, 5).map((val) => (val % 2 == 0 ? "even" : "odd"))]).toEqual([
+      "even",
+      "odd",
+      "even",
+      "odd",
+      "even",
+      "odd",
+    ]);
   });
 
   it("should properly apply the 'collect' function", () => {
@@ -112,7 +115,7 @@ describe("Chainable Iterator", () => {
       iter
         .range(0, 9)
         .map((val) => val.toString())
-        .reduce((acc, cur) => acc + cur)
+        .reduce((acc, cur) => acc + cur),
     ).toEqual("0123456789");
 
     expect(() => {
@@ -125,7 +128,7 @@ describe("Chainable Iterator", () => {
       iter
         .range(0, 10)
         .filter((val) => val % 2 == 0)
-        .collect()
+        .collect(),
     ).toEqual([0, 2, 4, 6, 8, 10]);
   });
 
@@ -138,7 +141,7 @@ describe("Chainable Iterator", () => {
     expect(
       TslyIter.fromGeneratorFn(function* () {
         return;
-      }).return().value
+      }).return().value,
     ).toEqual(void 0);
   });
 
@@ -174,9 +177,7 @@ describe("Chainable Iterator", () => {
   });
 
   it("should properly apply the 'chain' function", () => {
-    expect(iter.range(1, 3).chain(iter.range(4, 6)).collect()).toEqual([
-      1, 2, 3, 4, 5, 6,
-    ]);
+    expect(iter.range(1, 3).chain(iter.range(4, 6)).collect()).toEqual([1, 2, 3, 4, 5, 6]);
   });
 
   it("should properly apply the 'zip' function", () => {
@@ -193,9 +194,7 @@ describe("Chainable Iterator", () => {
   });
 
   it("should properly apply the 'filterMap' function", () => {
-    expect(iter.range(0, 10).filterMap(maybeDivideByTwo).collect()).toEqual([
-      0, 1, 2, 3, 4, 5,
-    ]);
+    expect(iter.range(0, 10).filterMap(maybeDivideByTwo).collect()).toEqual([0, 1, 2, 3, 4, 5]);
   });
 
   it("should properly apply the 'enumerate' function", () => {
@@ -204,7 +203,7 @@ describe("Chainable Iterator", () => {
         .range(1, 5)
         .map((n) => n * 10)
         .enumerate()
-        .collect()
+        .collect(),
     ).toEqual([
       [0, 10],
       [1, 20],
@@ -225,7 +224,7 @@ describe("Chainable Iterator", () => {
     expect(
       iter(_makeInfIter(10))
         .takeWhile((val) => val <= 15)
-        .collect()
+        .collect(),
     ).toEqual([10, 11, 12, 13, 14, 15]);
   });
 
@@ -234,20 +233,16 @@ describe("Chainable Iterator", () => {
       return val % 2 == 0;
     }
 
-    expect(iter([4, 2, 3, 2, 4]).skipWhile(isEven).collect()).toEqual([
-      3, 2, 4,
-    ]);
+    expect(iter([4, 2, 3, 2, 4]).skipWhile(isEven).collect()).toEqual([3, 2, 4]);
     expect(
       iter([1, 2, 3])
         .skipWhile((_) => false)
-        .collect()
+        .collect(),
     ).toEqual([1, 2, 3]);
   });
 
   it("should properly apply the 'mapWhile' function", () => {
-    expect(iter([2, 4, 6, 7, 8]).mapWhile(maybeDivideByTwo).collect()).toEqual([
-      1, 2, 3,
-    ]);
+    expect(iter([2, 4, 6, 7, 8]).mapWhile(maybeDivideByTwo).collect()).toEqual([1, 2, 3]);
   });
 
   it("should properly apply the 'skip' function", () => {
@@ -266,7 +261,7 @@ describe("Chainable Iterator", () => {
       iter
         .range(0, 5)
         .scan("", (prev, cur) => prev + cur)
-        .collect()
+        .collect(),
     ).toEqual(["0", "01", "012", "0123", "01234", "012345"]);
   });
 
@@ -275,7 +270,7 @@ describe("Chainable Iterator", () => {
       iter
         .range(1, 3)
         .flatMap((_) => ["a", "b"])
-        .reduce((prev, cur) => prev + cur)
+        .reduce((prev, cur) => prev + cur),
     ).toEqual("ababab");
   });
 
@@ -283,22 +278,20 @@ describe("Chainable Iterator", () => {
     expect(
       iter([[1], 2, [3], [4, 5]])
         .flatten()
-        .collect()
+        .collect(),
     ).toEqual([1, 2, 3, 4, 5]);
   });
 
   it("should properly apply the 'fold' function", () => {
-    expect(
-      iter([[1], [2], [3], [4], [5]]).fold("## ", (acc, arr) => acc + arr[0])
-    ).toEqual("## 12345");
+    expect(iter([[1], [2], [3], [4], [5]]).fold("## ", (acc, arr) => acc + arr[0])).toEqual(
+      "## 12345",
+    );
   });
 
   it("should properly apply the 'inspect' function", () => {
     const fn = jest.fn();
 
-    expect(iter.range(1, 3).inspect(fn).inspect(fn).collect()).toEqual([
-      1, 2, 3,
-    ]);
+    expect(iter.range(1, 3).inspect(fn).inspect(fn).collect()).toEqual([1, 2, 3]);
     expect(fn).toBeCalled();
   });
 
@@ -311,9 +304,7 @@ describe("Chainable Iterator", () => {
 
   it("should properly apply the 'every' function", () => {
     expect(iter.range(0, 10).every(elementIsEven)).toEqual(false);
-    expect(
-      iter.range(0, 10).filter(elementIsEven).every(elementIsEven)
-    ).toEqual(true);
+    expect(iter.range(0, 10).filter(elementIsEven).every(elementIsEven)).toEqual(true);
   });
 
   it("should properly apply the 'dedup' function", () => {

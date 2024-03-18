@@ -17,13 +17,13 @@ import { useRef, useCallback } from "react";
  * @category Hook
  */
 export function useConstCallback<
-    T extends (
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ...args: any[]
-    ) => unknown,
+  T extends (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...args: any[]
+  ) => unknown,
 >(cb: T): T {
-    const cbRef = useRef<T>(cb);
-    cbRef.current = cb;
+  const cbRef = useRef<T>(cb);
+  cbRef.current = cb;
 
-    return useCallback((...args: Parameters<T>) => cbRef.current(...args), []) as T;
+  return useCallback((...args: Parameters<T>) => cbRef.current(...args), []) as T;
 }

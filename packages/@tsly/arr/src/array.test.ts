@@ -118,18 +118,13 @@ test("dropIdx()", () => {
 test("chunk()", () => {
   const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  expect(arr(nums).chunk(3).take()).toEqual([
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    [10],
-  ]);
+  expect(arr(nums).chunk(3).take()).toEqual([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]]);
   expect(arr([1, 2]).chunk(4).take()).toEqual([[1, 2]]);
   expect(arr([]).chunk(3).take()).toEqual([]);
   expect(
     arr([{ a: 1 }, { b: 2 }, { c: 3 }])
       .chunk(2)
-      .take()
+      .take(),
   ).toEqual([[{ a: 1 }, { b: 2 }], [{ c: 3 }]]);
 });
 
@@ -160,7 +155,7 @@ describe("dedup()", () => {
     expect(
       arr(things)
         .dedup((a, b) => a.val == b.val)
-        .take()
+        .take(),
     ).toEqual(things.slice(0, 2));
   });
 });
@@ -213,7 +208,7 @@ describe("toObj()", () => {
     expect(
       arr(fruits)
         .toObj((each) => each.length)
-        .take()
+        .take(),
     ).toEqual({
       apple: 5,
       orange: 6,

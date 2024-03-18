@@ -20,39 +20,31 @@ describe("maybe()", () => {
   });
 
   it("should handle null or undefined values correctly", () => {
-    expect(maybe(null as string | null)?.let((it) => it.length)).toEqual(
-      undefined
-    );
+    expect(maybe(null as string | null)?.let((it) => it.length)).toEqual(undefined);
   });
 
   it('should handle "takeUnless" method correctly', () => {
-    expect(
-      maybe([1, 2, 3] as number[] | null)?.takeUnless((it) => it.length == 0)
-    ).toEqual([1, 2, 3]);
-    expect(
-      maybe([] as number[] | null)?.takeUnless((it) => it.length == 0)
-    ).toEqual(null);
+    expect(maybe([1, 2, 3] as number[] | null)?.takeUnless((it) => it.length == 0)).toEqual([
+      1, 2, 3,
+    ]);
+    expect(maybe([] as number[] | null)?.takeUnless((it) => it.length == 0)).toEqual(null);
   });
 
   it('should handle "takeIf" method correctly', () => {
-    expect(
-      maybe([1, 2, 3] as number[] | null)?.takeIf((it) => it.length > 0)
-    ).toEqual([1, 2, 3]);
-    expect(maybe([] as number[] | null)?.takeIf((it) => it.length > 0)).toEqual(
-      null
-    );
+    expect(maybe([1, 2, 3] as number[] | null)?.takeIf((it) => it.length > 0)).toEqual([1, 2, 3]);
+    expect(maybe([] as number[] | null)?.takeIf((it) => it.length > 0)).toEqual(null);
   });
 
   it('should handle "if" method correctly', () => {
     expect(
       maybe([1, 2, 3] as number[] | null)
         ?.if((it) => it.length > 0)
-        ?.take()
+        ?.take(),
     ).toEqual([1, 2, 3]);
     expect(
       maybe([1, 2, 3] as number[] | null)
         ?.if((it) => it.length == 0)
-        ?.take()
+        ?.take(),
     ).toEqual(undefined);
   });
 
@@ -60,11 +52,9 @@ describe("maybe()", () => {
     expect(
       maybe([1, 2, 3] as number[] | null)
         ?.unless((it) => it.length == 0)
-        ?.take()
+        ?.take(),
     ).toEqual([1, 2, 3]);
-    expect(
-      maybe([] as number[] | null)?.unless((it) => it.length == 0)
-    ).toEqual(maybe(null));
+    expect(maybe([] as number[] | null)?.unless((it) => it.length == 0)).toEqual(maybe(null));
   });
 
   it("should properly eject the wrapped value", () => {
@@ -88,20 +78,18 @@ describe("maybe()", () => {
     const thing2 = "foo" as Nullable<string>;
 
     function parse(str: string) {
-      return pipe(Number.parseInt(str), (it) =>
-        !Number.isNaN(it) ? it : err("Failed to parse")
-      );
+      return pipe(Number.parseInt(str), (it) => (!Number.isNaN(it) ? it : err("Failed to parse")));
     }
 
     expect(
       maybe(thing)
         ?.try((it) => parse(it))
-        ?.take() ?? null
+        ?.take() ?? null,
     ).toEqual(1234);
     expect(
       maybe(thing2)
         ?.try((it) => parse(it))
-        ?.take() ?? null
+        ?.take() ?? null,
     ).toEqual(null);
   });
 
@@ -110,9 +98,7 @@ describe("maybe()", () => {
     const thing2 = "foo" as Nullable<string>;
 
     function parse(str: string) {
-      return pipe(Number.parseInt(str), (it) =>
-        !Number.isNaN(it) ? it : err("Failed to parse")
-      );
+      return pipe(Number.parseInt(str), (it) => (!Number.isNaN(it) ? it : err("Failed to parse")));
     }
 
     expect(maybe(thing)?.tryTake((it) => parse(it)) ?? null).toEqual(1234);
@@ -131,7 +117,7 @@ describe("maybe()", () => {
           fn(it);
           return "bar";
         })
-        .take()
+        .take(),
     ).toEqual("foo");
 
     expect(
@@ -140,7 +126,7 @@ describe("maybe()", () => {
           fn(it);
           return "bar";
         })
-        .take()
+        .take(),
     ).toEqual(undefined);
 
     expect(fn).toBeCalledTimes(1);

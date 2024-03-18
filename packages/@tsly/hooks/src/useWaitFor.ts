@@ -21,13 +21,13 @@ import { useEffect, useState } from "react";
  * ```
  */
 export function useWaitFor<T extends () => unknown>(fn: T, ...preconditions: boolean[]) {
-    const [done, setDone] = useState(false);
+  const [done, setDone] = useState(false);
 
-    useEffect(() => {
-        if (done) return;
-        if (preconditions.some((v) => !v)) return;
+  useEffect(() => {
+    if (done) return;
+    if (preconditions.some((v) => !v)) return;
 
-        fn();
-        setDone(true);
-    }, preconditions);
+    fn();
+    setDone(true);
+  }, preconditions);
 }

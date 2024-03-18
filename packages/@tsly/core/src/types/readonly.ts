@@ -1,4 +1,4 @@
-import { DeepUnwind } from "./unwind"; 
+import { DeepUnwind } from "./unwind";
 
 /**
  * Recursivly removes `readonly` from the given type.
@@ -32,7 +32,7 @@ import { DeepUnwind } from "./unwind";
  * ```
  */
 export type DeepRemoveReadonly<T> = T extends readonly unknown[]
-    ? DeepRemoveReadonly<DeepUnwind<T>>[]
-    : T extends object
-    ? { -readonly [k in keyof T]: DeepRemoveReadonly<T[k]> }
-    : T;
+  ? DeepRemoveReadonly<DeepUnwind<T>>[]
+  : T extends object
+  ? { -readonly [k in keyof T]: DeepRemoveReadonly<T[k]> }
+  : T;

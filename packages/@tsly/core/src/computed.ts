@@ -2,7 +2,7 @@ export function computed<T>(
   get: () => T,
   options?: {
     set?: (value: T) => void;
-  }
+  },
 ): { value: T } {
   const proxy = new Proxy({ value: null } as any, {
     get(_target, _prop, _recvr) {

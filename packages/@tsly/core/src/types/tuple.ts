@@ -15,7 +15,7 @@
 export type ConcatTuple<
   TTuple extends string[],
   TDelim extends string,
-  TAcc extends string = ""
+  TAcc extends string = "",
 > = TTuple extends [infer Head extends string, ...infer Rest extends string[]]
   ? ConcatTuple<Rest, TDelim, `${TAcc}${TDelim}${Head}`>
   : TAcc;
@@ -37,11 +37,8 @@ export type ConcatTuple<
 export type ConcatReadonlyTuple<
   TTuple extends readonly string[],
   TDelim extends string,
-  TAcc extends string = ""
-> = TTuple extends readonly [
-  infer Head extends string,
-  ...infer Rest extends readonly string[]
-]
+  TAcc extends string = "",
+> = TTuple extends readonly [infer Head extends string, ...infer Rest extends readonly string[]]
   ? ConcatReadonlyTuple<Rest, TDelim, `${TAcc}${TDelim}${Head}`>
   : TAcc;
 
@@ -63,10 +60,7 @@ export type ConcatReadonlyTuple<
 export type MappedTuple<
   TTuple extends readonly [...object[]],
   TKey extends keyof TTuple[number],
-  TMapped extends readonly [...unknown[]] = []
-> = TTuple extends readonly [
-  infer THead extends object,
-  ...infer TRest extends object[]
-]
+  TMapped extends readonly [...unknown[]] = [],
+> = TTuple extends readonly [infer THead extends object, ...infer TRest extends object[]]
   ? MappedTuple<TRest, TKey, [...TMapped, THead[TKey]]>
   : TMapped;

@@ -31,10 +31,7 @@ import { DeepValue } from "./deepValue";
  * }
  * ```
  */
-export type DeepPick<
-  TBase extends object,
-  TKeys extends DeepKeyOf<TBase>
-> = IntersectUnion<
+export type DeepPick<TBase extends object, TKeys extends DeepKeyOf<TBase>> = IntersectUnion<
   {
     [K in TKeys]: K extends `${infer KHead}.${infer KTail}`
       ? KHead extends keyof TBase

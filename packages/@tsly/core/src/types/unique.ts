@@ -35,5 +35,5 @@ type LastOf<T> = IntersectUnion<T extends T ? () => T : never> extends () => inf
 type Push<T extends unknown[], V> = [...T, V];
 
 type UnionToUnsafeTuple<T, L = LastOf<T>, N = [T] extends [never] ? true : false> = true extends N
-    ? []
-    : Push<UnionToUnsafeTuple<Exclude<T, L>>, L>;
+  ? []
+  : Push<UnionToUnsafeTuple<Exclude<T, L>>, L>;

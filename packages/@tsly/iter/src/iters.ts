@@ -138,9 +138,7 @@ export class TslyIter<T> implements Generator<T> {
       if (next.done) return val;
       else return _next(func(val, next.value));
     };
-    return _next(
-      this.generator.next().value ?? err("Cannot reduce an empty iterator")
-    );
+    return _next(this.generator.next().value ?? err("Cannot reduce an empty iterator"));
   }
 
   /**
@@ -375,7 +373,7 @@ export class TslyIter<T> implements Generator<T> {
             yield val;
           }
         }
-      }.bind(this)
+      }.bind(this),
     );
   }
 
@@ -403,7 +401,7 @@ export class TslyIter<T> implements Generator<T> {
           if (!func(val)) return;
           yield val;
         }
-      }.bind(this)
+      }.bind(this),
     );
   }
 
@@ -435,7 +433,7 @@ export class TslyIter<T> implements Generator<T> {
 
           yield mapped;
         }
-      }.bind(this)
+      }.bind(this),
     );
   }
 
@@ -482,7 +480,7 @@ export class TslyIter<T> implements Generator<T> {
           state = func(state, val);
           yield state;
         }
-      }.bind(this)
+      }.bind(this),
     );
   }
 
@@ -504,7 +502,7 @@ export class TslyIter<T> implements Generator<T> {
           if (Array.isArray(val)) yield* TslyIter.fromArr(val);
           else yield val;
         }
-      }.bind(this)
+      }.bind(this),
     );
   }
 
@@ -521,9 +519,7 @@ export class TslyIter<T> implements Generator<T> {
    * console.log(result); // Output: [1, 2, 2, 4, 3, 6]
    * ```
    */
-  flatMap<U>(
-    func: (val: T) => U
-  ): TslyIter<U extends (infer Inner)[] ? Inner : U> {
+  flatMap<U>(func: (val: T) => U): TslyIter<U extends (infer Inner)[] ? Inner : U> {
     return this.map(func).flatten();
   }
 
@@ -566,9 +562,7 @@ export class TslyIter<T> implements Generator<T> {
    * console.log(oddIter.collect()); // Output: [1, 3, 5]
    * ```
    */
-  partition(
-    func: (val: T) => boolean
-  ): [passIter: TslyIter<T>, failIter: TslyIter<T>] {
+  partition(func: (val: T) => boolean): [passIter: TslyIter<T>, failIter: TslyIter<T>] {
     const [a, b] = this.fold([[] as T[], [] as T[]], ([arr1, arr2], val) => {
       if (func(val)) return [arr1.concat([val]), arr2];
       else return [arr1, arr2.concat([val])];
@@ -727,10 +721,7 @@ export const iter = Object.assign(_builder, {
   range: (lower: number, upperIncl: number) => {
     const arr = [lower];
 
-    while (
-      (arr.at(-1) ?? err<string, number>("expected non-empty array")) <
-      upperIncl
-    )
+    while ((arr.at(-1) ?? err<string, number>("expected non-empty array")) < upperIncl)
       arr.push(arr.at(-1)! + 1);
 
     return TslyIter.fromArr(arr);

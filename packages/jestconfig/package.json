@@ -1,9 +1,11 @@
 {
-    "name": "jestconfig",
-    "version": "0.0.0",
-    "private": true,
-    "files": ["./jest.config.ts"],
-    "devDependencies": {
-        "ts-jest": "^29.0.3"
-    }
+  "name": "jestconfig",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "./jest.config.ts"
+  ],
+  "devDependencies": {
+    "ts-jest": "^29.0.3"
+  }
 }

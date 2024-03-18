@@ -1,2 +1,2 @@
-export * from './deep';
-export * from './types';
+export * from "./deep";
+export * from "./types";

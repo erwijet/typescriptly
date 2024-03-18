@@ -7,11 +7,9 @@ test("escape regex", () => {
 
 test("sliceStrTo", () => {
   expect(str("apple.banana.orange.kiwi").sliceTo(".").take()).toEqual("apple.");
-  expect(str("apple.banana.orange.kiwi").sliceTo(".", 2).take()).toEqual(
-    "apple.banana.orange."
-  );
+  expect(str("apple.banana.orange.kiwi").sliceTo(".", 2).take()).toEqual("apple.banana.orange.");
   expect(str("apple.banana.orange.kiwi").sliceTo(".", 100).take()).toEqual(
-    "apple.banana.orange.kiwi"
+    "apple.banana.orange.kiwi",
   );
 });
 

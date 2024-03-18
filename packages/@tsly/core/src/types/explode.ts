@@ -14,6 +14,8 @@
  * ```
  */
 export type Explode<
-    TStr extends string,
-    TAcc extends readonly string[] = [],
-> = TStr extends `${infer Head extends string}${infer Rest extends string}` ? Explode<Rest, [...TAcc, Head]> : TAcc;
+  TStr extends string,
+  TAcc extends readonly string[] = [],
+> = TStr extends `${infer Head extends string}${infer Rest extends string}`
+  ? Explode<Rest, [...TAcc, Head]>
+  : TAcc;

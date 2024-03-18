@@ -12,4 +12,8 @@ type Fn<P> = (p: P) => unknown;
  * //   ^? { a: string } & { b: number };
  * ```
  */
-export type IntersectUnion<Union> = (Union extends Union ? Fn<Union> : never) extends Fn<infer Intersection> ? Intersection : never;
+export type IntersectUnion<Union> = (Union extends Union ? Fn<Union> : never) extends Fn<
+  infer Intersection
+>
+  ? Intersection
+  : never;

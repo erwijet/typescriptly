@@ -137,19 +137,14 @@ class DeepObject<T extends object> {
    * @param key The specified {@link DeepKeyOf} of the base object
    * @param value The value to use at the specified `key`
    */
-  replaceAt<K extends DeepKeyOf<T>>(
-    key: K,
-    value: DeepValue<T, K>
-  ): DeepObject<T> {
+  replaceAt<K extends DeepKeyOf<T>>(key: K, value: DeepValue<T, K>): DeepObject<T> {
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     const _mutateObj = (obj: any, key: string, value: any): void => {
       const [kHead, ...kRest] = key.split(".");
 
-      if (Array.isArray(obj))
-        obj.forEach((member, i) => _mutateObj(member, key, value[i]));
+      if (Array.isArray(obj)) obj.forEach((member, i) => _mutateObj(member, key, value[i]));
       else if (kRest.length == 0) obj[kHead] = value;
-      else if (obj[kHead] !== undefined)
-        _mutateObj(obj[kHead], kRest.join("."), value);
+      else if (obj[kHead] !== undefined) _mutateObj(obj[kHead], kRest.join("."), value);
     };
 
     const clonedObj = this.into(obj).quickDeepClone().take();
@@ -187,16 +182,13 @@ class DeepObject<T extends object> {
       return Object.keys(o).flatMap((k) => {
         const v = o[k as keyof T];
 
-        if (
-          Array.isArray(v) &&
-          v.some((el) => typeof el == "object")
-        ) {
+        if (Array.isArray(v) && v.some((el) => typeof el == "object")) {
           v.reduce((last, cur) => {
             if (JSON.stringify(obj(last).keys) != JSON.stringify(obj(cur).keys))
               throw new Error(
                 `Tried to call getDeepObjKeys with an array subobject that does not have a well-defined structure: ${
                   obj(last).keys
-                } != ${obj(cur).keys}`
+                } != ${obj(cur).keys}`,
               );
             return cur;
           });
@@ -205,10 +197,7 @@ class DeepObject<T extends object> {
         }
 
         if (typeof v == "object" && !Array.isArray(v) && v != null)
-          return [
-            prefix + k,
-            ..._next(v as object, k + ".").map((k) => k + prefix),
-          ];
+          return [prefix + k, ..._next(v as object, k + ".").map((k) => k + prefix)];
         return prefix + k;
       }) as DeepKeyOf<T>[];
     }
@@ -269,9 +258,10 @@ class DeepObject<T extends object> {
     if (cur === undefined) return cur as DeepValue<T, TKey>;
     if (kRest.length == 0) return cur as DeepValue<T, TKey>;
     else if (Array.isArray(cur))
-      return cur.map((el) =>
-        deep(el).get(kRest.join(".") as DeepKeyOf<typeof el>)
-      ) as DeepValue<T, TKey>;
+      return cur.map((el) => deep(el).get(kRest.join(".") as DeepKeyOf<typeof el>)) as DeepValue<
+        T,
+        TKey
+      >;
     else return deep(cur as object).get(kRest.join(".") as DeepKeyOf<object>);
   }
 
@@ -314,22 +304,15 @@ class DeepObject<T extends object> {
    * // returns { attrs: { hobbies: [ { name: "coffee" }, { name: "other stuff" } ] } }
    * ```
    */
-  getNested<TDeepKey extends DeepKeyOf<T>>(
-    deepKey: TDeepKey
-  ): DeepPick<T, TDeepKey> {
+  getNested<TDeepKey extends DeepKeyOf<T>>(deepKey: TDeepKey): DeepPick<T, TDeepKey> {
     if (Array.isArray(this.inner))
-      return this.inner.map((child) =>
-        deep(child).getNested(deepKey)
-      ) as DeepPick<T, TDeepKey>;
-    if (!deepKey.includes("."))
-      return { [deepKey]: this.get(deepKey) } as DeepPick<T, TDeepKey>;
+      return this.inner.map((child) => deep(child).getNested(deepKey)) as DeepPick<T, TDeepKey>;
+    if (!deepKey.includes(".")) return { [deepKey]: this.get(deepKey) } as DeepPick<T, TDeepKey>;
 
     const [curKey, ...restKeys] = deepKey.split(".");
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any  */
     return {
-      [curKey]: deep(this.inner[curKey as keyof T] as any).getNested(
-        restKeys.join(".")
-      ),
+      [curKey]: deep(this.inner[curKey as keyof T] as any).getNested(restKeys.join(".")),
     } as DeepPick<T, TDeepKey>;
   }
 
