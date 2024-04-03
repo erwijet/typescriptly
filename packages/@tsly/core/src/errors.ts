@@ -1,3 +1,6 @@
+export function err<R>(msg: string): R;
+export function err<T extends Error | string, R = void>(error: T): R;
+
 /**
  * Thows the given error
  *
