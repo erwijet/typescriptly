@@ -1,5 +1,11 @@
 # @tsly/core
 
+## 1.4.0
+
+### Minor Changes
+
+- fa015f7: Adds a varient of `err` with a single typearg
+
 ## 1.3.0
 
 ### Minor Changes
