@@ -229,7 +229,9 @@ class TslyArray<T> {
   }
 
   /**
-   * Merges multiple arrays and returns a new array containing the unique elements from all union of the given arrays.
+   * Merges multiple arrays and returns a new array containing the unique elements from all union of the given arrays. Equality is determined via the `==` operator on each element.
+   *
+   * To merge arrays with a custom equality function, see {@link mergeBy}
    *
    * @typeParam T - The type of elements in the arrays.
    * @param arrs - Arrays to be merged.
@@ -241,12 +243,37 @@ class TslyArray<T> {
    * const arr2 = [2, 3, 4];
    * const arr3 = [3, 4, 5];
    *
-   * mergeArrs(arr1, arr2, arr3);
+   * arr(arr1).merge(arr2, arr3).take();
    * // returns [1, 2, 3, 4, 5]
    * ```
    */
   merge(...arrs: T[][]): TslyArray<T> {
-    return arr([this.inner, ...arrs].reduce((acc, cur) => acc.concat(cur))).dedup();
+    return this.mergeBy((a, b) => a == b, ...arrs);
+  }
+
+  /**
+   * Merges multiple arrays and returns a new array containing the unique elements from all union of the given arrays via a custom equality predicate.
+   *
+   * @typeParam T - The type of elements in the arrays.
+   * @param arrs - Arrays to be merged.
+   * @returns A new array with unique elements from all input arrays.
+   *
+   * @example
+   * ```ts
+   * const arr1 = [{ name: "person1", age: 12 }, { name: "person2", age: 32 }];
+   * const arr2 = [{ name: "person3", age: 32 }, { name: "person4", age: 10 }];
+   * const arr3 = [{ name: "person5", age: 12 }, { name: "person6", age: 32 }];
+   * 
+   * arr(arr1).mergeBy((a, b) => a.age == b.age, arr2, arr3).take(0)
+   * // returns [
+   * //   { name: "person1", age: 12 },
+   * //   { name: "person2", age: 32 },
+   * //   { name: "person4", age: 10 }
+   * // ]
+   * ```
+   */
+  mergeBy(predicate: (a: T, b: T) => boolean, ...arrs: T[][]): TslyArray<T> {
+    return arr([this.inner, ...arrs].reduce((acc, cur) => acc.concat(cur))).dedup(predicate);
   }
 
   /**
@@ -273,7 +300,7 @@ class TslyArray<T> {
    * ```
    */
   toObj<E>(
-    mapping: (k: Extract<T, string | number | symbol>) => E,
+    mapping: (k: Extract<T, string | number | symbol>) => E
   ): ReturnType<typeof obj<Record<Extract<T, string | number | symbol>, E>>> {
     function isKeylike(v: T): v is Extract<T, string | number | symbol> {
       return ["string", "number", "symbol"].includes(typeof v);

@@ -124,7 +124,7 @@ test("chunk()", () => {
   expect(
     arr([{ a: 1 }, { b: 2 }, { c: 3 }])
       .chunk(2)
-      .take(),
+      .take()
   ).toEqual([[{ a: 1 }, { b: 2 }], [{ c: 3 }]]);
 });
 
@@ -155,7 +155,7 @@ describe("dedup()", () => {
     expect(
       arr(things)
         .dedup((a, b) => a.val == b.val)
-        .take(),
+        .take()
     ).toEqual(things.slice(0, 2));
   });
 });
@@ -189,6 +189,32 @@ describe("merge()", () => {
   });
 });
 
+describe("mergeBy()", () => {
+  it("should merge multiple arrays by some arbitrary predicate", () => {
+    const arr1 = [
+      { name: "person1", age: 12 },
+      { name: "person2", age: 32 },
+    ];
+    const arr2 = [
+      { name: "person3", age: 32 },
+      { name: "person4", age: 10 },
+    ];
+    const arr3 = [
+      { name: "person5", age: 12 },
+      { name: "person6", age: 32 },
+    ];
+    expect(
+      arr(arr1)
+        .mergeBy((a, b) => a.age == b.age, arr2, arr3)
+        .take()
+    ).toEqual([
+      { name: "person1", age: 12 },
+      { name: "person2", age: 32 },
+      { name: "person4", age: 10 },
+    ]);
+  });
+});
+
 describe("count()", () => {
   const fruits = ["apple", "orange", "pear", "banana"];
 
@@ -208,7 +234,7 @@ describe("toObj()", () => {
     expect(
       arr(fruits)
         .toObj((each) => each.length)
-        .take(),
+        .take()
     ).toEqual({
       apple: 5,
       orange: 6,
