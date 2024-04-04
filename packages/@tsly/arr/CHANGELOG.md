@@ -1,5 +1,11 @@
 # @tsly/arr
 
+## 1.5.0
+
+### Minor Changes
+
+- d5dcc96: Introduces `mergeBy` for merging arrays that require a custom equality function for deduping
+
 ## 1.4.3
 
 ### Patch Changes
