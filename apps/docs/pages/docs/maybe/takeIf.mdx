@@ -1,0 +1,26 @@
+# takeIf
+
+Conditionally unwraps and returns the inner value if the predicate is true, otherwise returns `null`.
+
+Note that unlike [`.if()`](if.mdx), this method **unwraps** the `Maybe<T>` class, returning the inner value. As such, this method is **not** chainable.
+
+```ts copy codesandbox=tsly
+import { maybe } from "@tsly/maybe";
+
+function handleRequest(arg: number) {
+    const resp: { ok: boolean, data: number[] } | undefined = loadSomething(arg);
+
+    return maybe(resp)?.takeIf(it => it.ok)
+}
+
+function loadSomething(arg) {
+    if (arg == 0) return undefined;
+
+    if (arg % 2 == 0) return { ok: true, data: [1, 2, 3] }
+    else return { ok: false, data: []  }
+}
+
+console.log(handleRequest(0)); // undefined
+console.log(handleRequest(1)); // null
+console.log(handleRequest(2)); // { ok: true, data: [1, 2, 3] }
+```

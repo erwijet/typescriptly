@@ -1,10 +1,8 @@
-import { OpenPlayground } from "@/Playground.tsx";
-
 # pickKeys
 
 Reduces the wrapped object to only have the specified keys
 
-```ts copy
+```ts copy codesandbox=tsly
 import { obj } from "@tsly/obj";
 
 const person = {
@@ -14,26 +12,8 @@ const person = {
   state: "NY",
 };
 
-const name = obj(person).dropKeys(["firstName", "lastName"]).take();
+const name = obj(person).dropKeys(["first", "last"]).take();
 
-console.log(name); // { "firstName": "John", "lastName": "Smith" }
-console.log(person); // { "firstName": "John", "lastName": "Smith", "age": 23, "state": "NY" }
+console.log(name); // { "first": "John", "last": "Smith" }
+console.log(person); // { "first": "John", "last": "Smith", "age": 23, "state": "NY" }
 ```
-
-<OpenPlayground
-  code={`
-import { obj } from "@tsly/obj";
-
-const person = {
-  first: "John",
-  last: "Smith",
-  age: 23,
-  state: "NY",
-};
-
-const name = obj(person).dropKeys(["firstName", "lastName"]).take();
-
-console.log(name); // { "firstName": "John", "lastName": "Smith" }
-console.log(person); // { "firstName": "John", "lastName": "Smith", "age": 23, "state": "NY" }
-`}
-/>

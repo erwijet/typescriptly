@@ -1,0 +1,11 @@
+{
+    "let": "let",
+    "takeIf": "takeIf",
+    "takeUnless": "takeUnless",
+    "if": "if",
+    "unless": "unless",
+    "try": "try",
+    "tryTake": "tryTake",
+    "also": "also",
+    "take": "take"
+}

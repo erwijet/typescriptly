@@ -1,0 +1,15 @@
+# last
+
+Gets the last element of the wrapped array if one exists, otherwise `null`.
+
+```ts copy codesandbox=tsly
+import { arr } from '@tsly/arr';
+
+const fruit = ["pear", "banana", "orange"];
+console.log(arr(fruit).last);
+// "orange"
+
+const empty = [];
+console.log(arr(empty).last);
+// null
+```

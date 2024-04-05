@@ -1,0 +1,12 @@
+# swapAt
+
+Returns a copy of the array with the elements at the given indices swapped.
+
+```ts copy codesandbox=tsly
+import { arr } from "@tsly/arr";
+
+const fruit = ["apple", "banana", "pear"];
+
+console.log(arr(fruit).swapAt(1, 2).take()); 
+// ['apple', 'pear', 'banana']
+```

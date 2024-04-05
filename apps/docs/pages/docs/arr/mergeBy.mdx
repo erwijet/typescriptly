@@ -1,0 +1,21 @@
+# mergeBy
+
+Similar to [`.merge()`](merge.mdx), this method concats one or more arrays onto the wrapped array. However, unlike [`.merge()`](merge.mdx), `mergeBy` allows for a custom equality predicate for deduping. This is often useful when working with arrays of objects.
+
+```ts copy codesandbox=tsly
+import { arr } from "@tsly/arr";
+const arr1 = [{ name: "person1", age: 12 }, { name: "person2", age: 32 }];
+const arr2 = [{ name: "person3", age: 32 }, { name: "person4", age: 10 }];
+const arr3 = [{ name: "person5", age: 12 }, { name: "person6", age: 32 }];
+
+arr(arr1)
+    .mergeBy((a, b) => a.age == b.age, arr2, arr3)
+    .take(console.log)
+
+// [
+//   { name: "person1", age: 12 },
+//   { name: "person2", age: 32 },
+//   { name: "person4", age: 10 }
+// ]
+```
+    

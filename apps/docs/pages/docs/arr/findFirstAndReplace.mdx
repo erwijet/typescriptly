@@ -1,0 +1,12 @@
+# findFirstAndReplace
+
+Replaces the first matching value for a given predicate with another value in the wrapped array.
+
+```ts copy codesandbox=tsly
+import { arr } from "@tsly/arr";
+import { isNone } from "@tsly/maybe";
+
+const nums = [1, 2, null, 3, null, 4];
+console.log(arr(nums).findFirstAndReplace(9, isNone).take());
+// [1, 2, 9, 3, null, 4]
+```

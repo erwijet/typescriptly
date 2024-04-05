@@ -1,0 +1,12 @@
+# hasIdx
+
+Checks if the given number is an index of the wrapped array.
+
+```ts copy codesandbox=tsly
+import { arr } from '@tsly/arr';
+
+const fruits = ["apple", "banana", "pear"];
+
+console.log(arr(fruits).hasIdx(1)); // true
+console.log(arr(fruits).hasIdx(10)); // false
+```

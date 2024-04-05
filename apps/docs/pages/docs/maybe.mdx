@@ -1,0 +1,49 @@
+## `@tsly/maybe`
+
+This package publishes utilities for working with any nullish values. It's method are designed to be chainable and were inspired by [kotlin-style scope functions](https://kotlinlang.org/docs/scope-functions.html).
+
+### The `maybe` Function
+
+```ts
+import { maybe } from "@tsly/maybe";
+```
+
+The `maybe` function is the factory for the underlying `Maybe<T>` class, however the `maybe()` function has some important typings.
+
+This package largely relies upon [nullish/optional chaining](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html). As such, calling `maybe` will return `null` for any nullish value, and `Maybe<T>` for any non-nullish value. This logic is recursive for any chainable method within the `Maybe<T>` class.
+
+```ts
+import { maybe } from "@tsly/maybe";
+
+const value: string | undefined = // ...
+const example = maybe(value);
+//    ^? Maybe<string> | null
+```
+
+### Ancillary Exports
+
+```ts
+import { isSome } from "@tsly/maybe";
+const arr = ['one', 'two', undefined, 'three', null];
+
+console.log(arr.filter(isSome)); // ['one', 'two', 'three'];
+```
+
+```ts
+import { isNone } from "@tsly/maybe";
+const value: string | undefined = // ...
+
+if (isNone(value)) {
+    return;
+}
+
+value // <-- now typed as `string`
+```
+
+```ts
+// idiomatic counterpart to the `NonNullable` builtin
+import { type Nullable } from "@tsly/maybe";
+
+type Wrapped = Nullable<string>; // string | null
+type Unwrapped = NonNullable<MyType>; // string
+```

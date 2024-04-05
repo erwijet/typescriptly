@@ -1,0 +1,13 @@
+# dropIdx
+
+Removes the element at the given index from the wrapped array and shifts to the left any elements to the right of the index to cover the gap.
+
+```ts copy codesandbox=tsly
+import { arr } from "@tsly/arr";
+
+const fruit = ["apple", "banana", "orange", "pear"];
+const updated = arr(fruit).dropIdx(1).take();
+
+console.log(updated);
+// ["apple", "orange", "pear"]
+```

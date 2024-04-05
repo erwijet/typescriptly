@@ -1,0 +1,15 @@
+# interleave
+
+Interleaves so value in-between each element of the wrapped array.
+
+```ts copy codesandbox=tsly
+import { arr } from "@tsly/arr";
+
+const fruits = ["apple", "banana", "orange"];
+
+arr(fruits)
+    .interleave('|')
+    .take(it => console.log(it));
+
+// ["apple", "|", "banana", "|", "orange"]
+```

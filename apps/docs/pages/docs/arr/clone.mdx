@@ -1,0 +1,8 @@
+import { Callout } from "nextra/components";
+
+# clone
+
+Creates a clone of the wrapped array without calling the internal iterator, thereby improving performance--
+particularly for larger arrays. For more information refer to [this comparison benchmark](https://jsbench.me/fylb5kvldn/1)
+
+<Callout type="info">This operation returns the same as `[...arr]`</Callout>

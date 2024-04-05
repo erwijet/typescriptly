@@ -1,5 +1,4 @@
 import { Callout } from "nextra/components";
-import { OpenPlayground } from "@/Playground";
 
 # quickDeepClone
 
@@ -10,7 +9,7 @@ Deeply clones the wrapped object via the JSON serialize/deserialize method.
   `undefined`, or `Infinity`
 </Callout>
 
-```ts copy
+```ts copy codesandbox=tsly
 import { obj } from "@tsly/obj";
 
 const gizmo = { name: "gizmo", extraInfo: { tags: ["tag1", "tag2"] } };
@@ -25,19 +24,3 @@ const shallowClone = { ...gizmo };
 shallowClone == gizmo; // false
 shallowClone.extraInfo.tags == gizmo.extraInfo.tags; // true
 ```
-
-<OpenPlayground code={`
-import { obj } from "@tsly/obj";
-
-const gizmo = { name: "gizmo", extraInfo: { tags: ["tag1", "tag2"] } };
-
-// with quickDeepClone
-const deepClone = obj(gizmo).quickDeepClone().take();
-shallowClone == gizmo; // false
-shallowClone.extraInfo.tags == gizmo.extraInfo.tags; // false
-
-// with shallow clone
-const shallowClone = { ...gizmo };
-shallowClone == gizmo; // false
-shallowClone.extraInfo.tags == gizmo.extraInfo.tags; // true
-`} />

@@ -1,10 +1,8 @@
-import { OpenPlayground } from "@/Playground.tsx";
-
 # getUntypedProperty
 
 Attempt to get a property from the wrapped object with some arbitrary string key. If no property is found on the given object at the given key, `null` is returned.
 
-```ts copy
+```ts copy codesandbox=tsly
 import { obj } from "@tsly/obj";
 
 type Gizmo = { type: "polygon"; sides: number } | { type: "point" };
@@ -18,20 +16,3 @@ function getGizmo(): Gizmo {
 const sides = obj(getGizmo()).getUntypedProperty("sides");
 console.log(sides ?? "no sides");
 ```
-
-<OpenPlayground
-  code={`
-import { obj } from "@tsly/obj";
-
-type Gizmo = { type: "polygon"; sides: number } | { type: "point" };
-
-function getGizmo(): Gizmo {
-  return Math.random() < 0.5
-    ? { type: "point" }
-    : { type: "polygon", sides: 3 };
-}
-
-const sides = obj(getGizmo()).getUntypedProperty("sides");
-console.log(sides ?? "no sides");
-`}
-/>

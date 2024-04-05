@@ -1,10 +1,8 @@
-import { OpenPlayground } from "@/Playground.tsx";
-
 # dropKeys
 
 Deletes the specified keys from the wrapped object
 
-```ts copy
+```ts copy codesandbox=tsly
 import { obj } from "@tsly/obj";
 
 const person = {
@@ -19,21 +17,3 @@ const name = obj(person).dropKeys(["age", "state"]).take();
 console.log(name); // { "first": "John", "last": "Smith" }
 console.log(person); // { "first": "John", "last": "Smith", "age": 23, "state": "NY" }
 ```
-
-<OpenPlayground
-  code={`
-import { obj } from "@tsly/obj";
-
-const person = {
-  firstName: "John",
-  lastName: "Smith",
-  age: 23,
-  state: "NY",
-};
-
-const name = obj(person).dropKeys(["age", "state"]).take();
-
-console.log(name); // { "firstName": "John", "lastName": "Smith" }
-console.log(person); // { "firstName": "John", "lastName": "Smith", "age": 23, "state": "NY" }
-`}
-/>

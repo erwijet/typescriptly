@@ -1,4 +1,3 @@
-import { OpenPlayground } from "@/Playground.tsx";
 import { Callout } from "nextra/components";
 
 # keys
@@ -9,7 +8,7 @@ Gets the strongly-typed keys of the wrapped object.
   This is functionally equivilant to `Object.keys() as (keyof T)[]`
 </Callout>
 
-```ts copy
+```ts copy codesandbox=tsly
 import { obj } from '@tsly/obj';
 
 const person = {
@@ -23,17 +22,3 @@ const keys = obj(person).keys;
 
 console.log(keys); // ['firstName', 'lastName', 'favoriteColor']
 ```
-
-<OpenPlayground
-  code={`
-import { obj } from '@tsly/obj';
-
-const person = {
-  firstName: "Jane",
-  lastName: "Doe",
-  favoriteColor: "Green",
-};
-
-const keys = obj(person).keys;
-`}
-/>

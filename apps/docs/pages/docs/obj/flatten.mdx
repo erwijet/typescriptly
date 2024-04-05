@@ -1,12 +1,10 @@
-import { OpenPlayground } from "@/Playground";
-
 # flatten
 
 Flattens the wrapped object into an array with each entry key and value mapped to a specified named attribute.
 
 If only a name is specified, then given that the value of each record is an object, the keys of that subobject will be inlined into the new object.
 
-```ts copy
+```ts copy codesandbox=tsly
 const ages = {
   bill: 38,
   john: 21,
@@ -20,21 +18,7 @@ obj(ages)
 // [{ name: 'bill', age: 38 }, { name: 'john', age: 21 }, ...]
 ```
 
-<OpenPlayground code={`
-import { obj } from "@tsly/obj";
-
-const ages = {
-   bill: 38,
-   john: 21,
-   adam: 25,
-};
-
-obj(ages)
-   .flatten("name", "age")
-   .take((it) => console.log(it));
-`} />
-
-```ts copy
+```ts copy codesandbox=tsly
 const people = {
   bill: { age: 38, hobbies: ["cooking"] },
   john: { age: 21, hobbies: ["gardening", "sports"] },
@@ -47,17 +31,3 @@ obj(peoples)
 
 // [{ name: "bill", age: 38, hobbies: ["cooking"] }, ...]
 ```
-
-<OpenPlayground code={`
-import { obj } from "@tsly/obj";
-
-const people = {
-  bill: { age: 38, hobbies: ["cooking"] },
-  john: { age: 21, hobbies: ["gardening", "sports"] },
-  adam: { age: 25, hobbies: ["hiking"] },
-};
-
-obj(people)
-  .flatten("name")
-  .take((it) => console.log(it));
-`} />

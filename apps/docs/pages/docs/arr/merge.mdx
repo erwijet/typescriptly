@@ -1,0 +1,17 @@
+# merge
+
+Merges multiple new arrays into the wrapped array via [concatenation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat), then removes any duplicate values.
+
+```ts copy codesandbox=tsly
+import { arr } from "@tsly/arr";
+
+const nums1 = [1, 2, 3];
+const nums2 = [2, 3, 4];
+const nums3 = [3, 4, 5];
+
+arr(nums1)
+  .merge(nums2, nums3)
+  .take((it) => console.log(it));
+
+// [1, 2, 3, 4, 5]
+```

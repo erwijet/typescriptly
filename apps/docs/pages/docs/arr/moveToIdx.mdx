@@ -1,0 +1,11 @@
+# moveToIdx
+
+Moves the element at the `startIdx` to the specified `endIdx` without leaving any gaps. This behavior can be thought about as "drag 'n' drop" style, rather than something like [swapAt](/docs/arr/swapAt).
+
+```ts copy codesandbox=tsly
+import { arr } from "@tsly/arr";
+
+const fruit = ["apple", "banana", "orange", "pear", "kiwi"];
+console.log(arr(fruit).moveToIdx(1, 3).take());
+// ["apple", "orange", "pear", "banana", "kiwi"]
+```

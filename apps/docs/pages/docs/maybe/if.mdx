@@ -1,0 +1,18 @@
+# if
+
+Returns the `Maybe<T>` value if the supplied predicate is true, otherwise null. This method supports chaining, and is used to conditionally run the rest of the chained methods.
+
+```ts copy codesandbox=tsly
+import { maybe } from "@tsly/maybe";
+
+function foo(arg?: number[]): string {
+    return maybe(arg)
+        ?.if(it => it.length != 0)
+        ?.take(it => it.reduce((prev, cur) => prev + cur))
+        .toString() ?? "invalid";
+}
+
+console.log(foo()); // "invalid"
+console.log(foo([])); // "invalid"
+console.log(foo([1, 2, 3])); // "6"
+```

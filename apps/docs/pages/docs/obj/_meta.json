@@ -8,5 +8,6 @@
     "getUntypedProperty": "getUntypedProperty",
     "cast": "cast",
     "take": "take",
-    "into": "into"
+    "into": "into",
+    "with": "with"
 }

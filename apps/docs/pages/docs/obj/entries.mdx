@@ -1,4 +1,3 @@
-import { OpenPlayground } from "@/Playground.tsx";
 import { Callout } from "nextra/components";
 
 # entries
@@ -10,7 +9,7 @@ Gets the strongly-typed entries of the wrapped object.
    `[string, any][]{:ts}`
 </Callout>
 
-```ts copy
+```ts copy codesandbox=tsly
 import { obj } from "@tsly/obj";
 
 const person = {
@@ -24,19 +23,3 @@ const entries = obj(person).entries;
 
 console.log(entries); // [["firstName", "Jane"], ["lastName", "Doe"], ["age", 21]]
 ```
-
-<OpenPlayground
-  code={`
-import { obj } from "@tsly/obj";
-
-const person = {
-  firstName: "Jane",
-  lastName: "Doe",
-  age: 21,
-};
-
-const entries = obj(person).entries;
-
-console.log(entries);
-`}
-/>

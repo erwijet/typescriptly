@@ -1,0 +1,19 @@
+{
+    "clone": "clone",
+    "moveToIdx": "moveToIdx",
+    "swapAt": "swapAt",
+    "last": "last",
+    "findFirstAndReplace": "findFirstAndReplace",
+    "interleave": "interleave",
+    "hasIdx": "hasIdx",
+    "dropIdx": "dropIdx",
+    "chunk": "chunk",
+    "dedup": "dedup",
+    "deepFlatten": "deepFlatten",
+    "merge": "merge",
+    "mergeBy": "mergeBy",
+    "fromFactory": "fromFactory",
+    "isEmpty": "isEmpty",
+    "take": "take",
+    "into": "into"
+}

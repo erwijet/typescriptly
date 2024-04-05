@@ -1,0 +1,20 @@
+# let
+
+Maps the wrapped value to some other possibly nullish value. Unlike `take`, this method is chainable.
+
+```ts copy codesandbox=tsly
+import { maybe } from "@tsly/maybe";
+
+maybe(fetchPeople())
+    ?.let(it => it.find(ent => ent.name == "john"))
+    ?.take(console.log); 
+
+// {"id":0,"name":"john"}
+
+function fetchPeople(): { id: string, name: string }[] | undefined {
+    return [
+        { id: 0, name: "john" },
+        { id: 1, name: "adam" }
+    ]
+}
+```

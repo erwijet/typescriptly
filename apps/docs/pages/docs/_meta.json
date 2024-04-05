@@ -1,3 +1,4 @@
 {
-    "obj": "TslyObject"
+    "arr": "@tsly/arr",
+    "obj": "@tsly/obj"
 }

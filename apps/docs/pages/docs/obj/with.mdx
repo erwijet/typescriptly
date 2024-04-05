@@ -1,0 +1,53 @@
+# with
+
+Replaces a value at a given key
+
+
+```ts copy codesandbox=tsly
+import { obj } from "@tsly/obj";
+
+const person = obj({
+    name: { first: "john", last: "smith" },
+    age: 25,
+});
+
+person.with("age", 30).take(console.log);
+// { name: { first: "john", last: "smith"} }, age: 30 }
+
+// introducing new keys is also typesafe
+const updated = person.with('hobbies', ['running']).take();
+//    ^? (typeof person) & { hobbies: string[] }
+```
+
+A mapping function can also be specified instead of a value. This function will be called with the object's previous value at the specified key, and the result of the function will be used as the new value.
+
+```ts copy codesandbox=tsly
+import { obj } from "@tsly/obj";
+
+const person = obj({
+    name: { first: "john", last: "smith" },
+    age: 25,
+});
+
+person.with('age', age => age + 1).take(console.log);
+// { name: { first: "john", last: "doe" }, age: 26 }
+```
+
+When updating subobject values, Typescriptly will automatically wrap the argument of the mapping function with `TslyObject` so that `.with` can be chained. These objects are automatically unwrapped when they return from the function, so you don't need to call `.take()`.
+
+
+```ts copy codesandbox=tsly
+import { obj } from "@tsly/obj";
+
+const person = obj({
+    name: { first: "john", last: "smith" },
+    age: 25,
+});
+
+person
+    .with('name', name =>
+        name.with("first", 'david')) // <- `name` is auto wrapped/taken as a `TslyObject`
+    .take(console.log)
+
+// { name: { first: "david", last: "doe" }, age: 25 }
+```
