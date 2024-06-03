@@ -1,5 +1,11 @@
 # @tsly/arr
 
+## 1.6.0
+
+### Minor Changes
+
+- 7c2d8ec: Adds `update()` method
+
 ## 1.5.0
 
 ### Minor Changes
