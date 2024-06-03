@@ -263,7 +263,7 @@ class TslyArray<T> {
    * const arr1 = [{ name: "person1", age: 12 }, { name: "person2", age: 32 }];
    * const arr2 = [{ name: "person3", age: 32 }, { name: "person4", age: 10 }];
    * const arr3 = [{ name: "person5", age: 12 }, { name: "person6", age: 32 }];
-   * 
+   *
    * arr(arr1).mergeBy((a, b) => a.age == b.age, arr2, arr3).take(0)
    * // returns [
    * //   { name: "person1", age: 12 },
@@ -308,6 +308,27 @@ class TslyArray<T> {
 
     const ents = this.inner.filter(isKeylike).map((k) => [k, mapping(k)]);
     return obj(Object.fromEntries(ents));
+  }
+
+  update<E>(
+    options: { where: (value: T, idx: number) => boolean } & (
+      | { to: E }
+      | { by: (value: T, idx: number) => E }
+    )
+  ): TslyArray<T | E> {
+    return arr(
+      this.inner.map((value, idx) => {
+        if (!options.where(value, idx)) {
+          return value;
+        }
+
+        if ("by" in options) {
+          return options.by(value, idx);
+        }
+
+        return options.to;
+      })
+    );
   }
 
   //

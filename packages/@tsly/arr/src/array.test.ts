@@ -256,3 +256,23 @@ describe("toObj()", () => {
     });
   });
 });
+
+describe("update()", () => {
+  const fruit = ["apple", "orange", "pear"];
+
+  it("should properly insert values", () => {
+    expect(
+      arr(fruit)
+        .update({ to: "updated", where: (v) => v.length == 4 })
+        .take()
+    ).toEqual(["apple", "orange", "updated"]);
+  });
+
+  it("should properly transform valeus", () => {
+    expect(
+      arr(fruit)
+        .update({ by: (value) => value.length, where: (_, idx) => idx == 0 })
+        .take()
+    ).toEqual([5, "orange", "pear"]);
+  });
+});
