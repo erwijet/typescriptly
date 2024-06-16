@@ -1,13 +1,13 @@
 import { pipe } from "@tsly/core";
 
 /** @internal */
-type Entries<T extends object> = NonNullable<{ [k in keyof T]: [k, T[k]] }[keyof T]>[]
+type Entries<T extends object> = NonNullable<{ [k in keyof T]: [k, T[k]] }[keyof T]>[];
 
 /** @internal */
 type Flattened<
   T extends object,
   KIden extends string,
-  VIden extends string | undefined = undefined,
+  VIden extends string | undefined = undefined
 > = VIden extends string
   ? {
       [k in keyof T]: {
@@ -17,10 +17,6 @@ type Flattened<
   : { [k in keyof T]: T[k] & { [_ in KIden]: k } }[keyof T][];
 
 //
-
-export function obj<T extends object>(obj: T): TslyObject<T> {
-  return new TslyObject(obj);
-}
 
 class TslyObject<T extends object> {
   constructor(private inner: T) {}
@@ -114,7 +110,7 @@ class TslyObject<T extends object> {
     return pipe(
       this.keys.filter((k) => keys.includes(k)).map((k) => [k, this.inner[k]]),
       Object.fromEntries,
-      obj,
+      obj
     );
   }
 
@@ -157,21 +153,21 @@ class TslyObject<T extends object> {
    */
   flatten<KeyName extends string, ValueName extends string | undefined = undefined>(
     keyName: KeyName,
-    valueName?: ValueName,
+    valueName?: ValueName
   ): TslyObject<Flattened<T, KeyName, ValueName>> {
     if (typeof valueName == "string")
       return obj(
         this.entries.map(([k, v]) => ({
           [keyName]: k,
           [valueName]: v,
-        })) as Flattened<T, KeyName, ValueName>,
+        })) as Flattened<T, KeyName, ValueName>
       );
     else
       return obj(
         this.entries.map(([k, v]) => ({
           [keyName]: k,
           ...v,
-        })) as Flattened<T, KeyName, ValueName>,
+        })) as Flattened<T, KeyName, ValueName>
       );
   }
 
@@ -210,11 +206,11 @@ class TslyObject<T extends object> {
 
   with<New, Key extends keyof T>(
     key: Key,
-    fn: (prev: T[Key]) => New,
+    fn: (prev: T[Key]) => New
   ): TslyObject<Omit<T, Key> & { [_ in Key]: New }>;
   with<New, Key extends string>(
     key: Key,
-    value: New,
+    value: New
   ): TslyObject<Omit<T, Key> & { [_ in Key]: New }>;
   with(key: string, arg: unknown) {
     const inner = this.inner;
@@ -255,3 +251,18 @@ class TslyObject<T extends object> {
     return this.take(mapping);
   }
 }
+
+type Obj = {
+  <T extends object>(val: T): TslyObject<T>;
+  hasNoNullishProps<T extends object>(
+    val: T
+  ): val is { [key in keyof T]-?: Exclude<T[key], null | undefined> };
+};
+
+export const obj: Obj = Object.assign(<T extends object>(val: T) => new TslyObject(val), {
+  hasNoNullishProps<T extends object>(
+    val: T
+  ): val is { [key in keyof T]-?: Exclude<T[key], null | undefined> } {
+    return Object.entries(val).every(([, value]) => value != null && typeof value != "undefined");
+  },
+});

@@ -189,3 +189,23 @@ describe("with", () => {
     });
   });
 });
+
+describe("obj.hasNoNullishProps", () => {
+  type InputShape = {
+    name?: string | null;
+    age: number | null | undefined;
+  };
+
+  const things = (
+    [
+      { age: null },
+      { name: "adam", age: undefined },
+      { name: "john", age: 21 },
+    ] satisfies InputShape[]
+  ).filter(obj.hasNoNullishProps);
+
+  things.forEach((val) => {
+    expect(val.age).toEqual(21);
+    expect(val.name).toEqual("john");
+  });
+});
