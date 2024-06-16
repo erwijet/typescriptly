@@ -1,5 +1,11 @@
 # @tsly/arr
 
+## 1.6.5
+
+### Patch Changes
+
+- 7e837f5: Update typings to allow for passing `arr` as a first-class function
+
 ## 1.6.4
 
 ### Patch Changes
