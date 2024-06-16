@@ -1,6 +1,6 @@
 {
   "name": "@tsly/deep",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "repository": "git@github.com:bryx-inc/typescriptly.git",
   "author": "Tyler Holewinski <tyler.holewinski@bryx.com>",
   "license": "MIT",

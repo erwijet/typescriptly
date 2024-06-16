@@ -1,6 +1,6 @@
 {
   "name": "@tsly/arr",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "repository": "git@github.com:bryx-inc/typescriptly.git",
   "author": "Tyler Holewinski <tyler.holewinski@bryx.com>",
   "license": "MIT",
