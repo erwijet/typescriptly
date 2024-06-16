@@ -1,5 +1,12 @@
 # @tsly/deep
 
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies [d4cfa7e]
+  - @tsly/obj@1.2.0
+
 ## 1.2.0
 
 ### Minor Changes
