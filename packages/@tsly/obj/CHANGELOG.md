@@ -1,5 +1,11 @@
 # @tsly/obj
 
+## 1.2.1
+
+### Patch Changes
+
+- 43cd9c1: Fix issue with `.entries` for objects with optional keys
+
 ## 1.2.0
 
 ### Minor Changes
