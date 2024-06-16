@@ -375,17 +375,23 @@ function isArray(v: unknown): v is any[] | ReadonlyArray<any> {
   return Array.isArray(v);
 }
 
-function _builder<T>(size: number, factory: (i: number) => T): TslyArray<T>;
-function _builder<T>(inner: T[]): TslyArray<T>;
-function _builder<T>(inner: ReadonlyArray<T>): TslyArray<T>;
-
-function _builder<T>(arg1: number | T[] | ReadonlyArray<T>, arg2?: (i: number) => T): TslyArray<T> {
-  if (isArray(arg1))
-    return new TslyArray(arg1 as typeof arg1 extends ReadonlyArray<infer U> ? U[] : typeof arg1);
-  else return TslyArray.fromFactory(arg1, arg2 ?? err("missing factory"));
+function _builder<T>(inner: T[] | ReadonlyArray<T>): TslyArray<T> {
+  return new TslyArray(inner as typeof inner extends ReadonlyArray<infer U> ? U[] : typeof inner);
 }
 
-export const arr = Object.assign(_builder, {
+type Arr = {
+  <T>(inner: T[] | ReadonlyArray<T>): TslyArray<T>;
+  make<T>(size: number, factory: (i: number) => T): TslyArray<T>;
+  byReduce: readonly [
+    <T>(tslyArr: TslyArray<T>, cur: T, _idx: number, _self: T[]) => TslyArray<T>,
+    TslyArray<any>
+  ];
+};
+
+export const arr: Arr = Object.assign(_builder, {
+  make<T>(size: number, factory: (i: number) => T) {
+    return TslyArray.fromFactory(size, factory);
+  },
   byReduce: <const>[
     <T>(tslyArr: TslyArray<T>, cur: T, _idx: number, _self: T[]) => {
       return tslyArr.merge([cur]);

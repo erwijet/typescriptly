@@ -71,9 +71,9 @@ test("interleave()", () => {
 });
 
 test("hasIdx", () => {
-  expect(arr(50, (it) => it).hasIdx(50)).toEqual(false);
-  expect(arr(50, (it) => it).hasIdx(-1)).toEqual(false);
-  expect(arr(50, (it) => it).hasIdx(25)).toEqual(true);
+  expect(arr.make(50, (it) => it).hasIdx(50)).toEqual(false);
+  expect(arr.make(50, (it) => it).hasIdx(-1)).toEqual(false);
+  expect(arr.make(50, (it) => it).hasIdx(25)).toEqual(true);
 });
 
 test("insertAt()", () => {
@@ -101,7 +101,7 @@ test("no implicit clone", () => {
 });
 
 test("arr() from factory", () => {
-  expect(arr(5, (i) => i).take()).toEqual([0, 1, 2, 3, 4]);
+  expect(arr.make(5, (i) => i).take()).toEqual([0, 1, 2, 3, 4]);
 });
 
 test("arr.byReduce", () => {
