@@ -1,5 +1,11 @@
 # @tsly/core
 
+## 1.5.0
+
+### Minor Changes
+
+- 2676e5e: Remove `computed`
+
 ## 1.4.0
 
 ### Minor Changes

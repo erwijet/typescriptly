@@ -1,5 +1,11 @@
 # @tsly/hooks
 
+## 2.0.0
+
+### Major Changes
+
+- aca0893: RENAME from `@tsly/hooks` to `@tsly/react`
+
 ## 1.1.0
 
 ### Minor Changes

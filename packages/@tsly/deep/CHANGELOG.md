@@ -1,5 +1,15 @@
 # @tsly/deep
 
+## 1.2.0
+
+### Minor Changes
+
+- 5f4e6e4: Remove `.into<E>`
+
+### Patch Changes
+
+- @tsly/obj@1.1.0
+
 ## 1.1.2
 
 ### Patch Changes
