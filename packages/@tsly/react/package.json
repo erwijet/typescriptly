@@ -1,5 +1,5 @@
 {
-  "name": "@tsly/hooks",
+  "name": "@tsly/react",
   "version": "1.1.0",
   "repository": "git@github.com:bryx-inc/typescriptly.git",
   "author": "Tyler Holewinski <tyler.holewinski@bryx.com>",
