@@ -1,7 +1,7 @@
-import { KeyOfType, AssertSubtype, pipe, OverrideKeys } from "@tsly/core";
+import { pipe } from "@tsly/core";
 
 /** @internal */
-type Entries<T extends object> = { [k in keyof T]: [k, T[k]] }[keyof T][];
+type Entries<T extends object> = NonNullable<{ [k in keyof T]: [k, T[k]] }[keyof T]>[]
 
 /** @internal */
 type Flattened<
