@@ -4,7 +4,6 @@ import { tryOr } from "@tsly/core";
  * A shorthand type for `T | null`.
  */
 export type Nullable<T> = T | null;
-
 export function isNone<T>(m: Nullable<T>): m is null {
   return m == null;
 }
@@ -15,20 +14,24 @@ export function isSome<T>(m: Nullable<T>): m is NonNullable<T> {
 
 // ## //
 
-type CoalescableMaybe<T> =
-  | Maybe<NonNullable<T>>
+type Maybe<T> =
+  | Some<NonNullable<T>>
   | (T extends T ? (T extends null | undefined ? null : never) : never);
 
-export function maybe<T>(inner: T): CoalescableMaybe<T> {
-  if (inner == null) return null as CoalescableMaybe<T>;
-  else return new Maybe(inner) as CoalescableMaybe<T>;
+export function maybe<T>(inner: T): Maybe<T> {
+  if (inner == null) return null as Maybe<T>;
+  else return new Some(inner) as Maybe<T>;
 }
 
-class Maybe<T> {
+class Some<T> {
   constructor(private inner: T) {}
 
-  let<E>(mapping: (it: T) => E): CoalescableMaybe<E> {
+  let<E>(mapping: (it: T) => E): Maybe<E> {
     return maybe(mapping(this.inner));
+  }
+
+  map<E>(mapping: (it: T) => E): Maybe<E> {
+    return this.let(mapping);
   }
 
   takeIf(predicate: (it: T) => boolean): T | null {
@@ -41,17 +44,17 @@ class Maybe<T> {
     else return this.inner;
   }
 
-  if(predicate: (it: T) => boolean): Maybe<T> | null {
+  if(predicate: (it: T) => boolean): Some<T> | null {
     if (predicate(this.inner)) return this;
     else return null;
   }
 
-  unless(predicate: (it: T) => boolean): Maybe<T> | null {
+  unless(predicate: (it: T) => boolean): Some<T> | null {
     if (predicate(this.inner)) return null;
     else return this;
   }
 
-  try<E>(mapping: (it: T) => E): CoalescableMaybe<E> | null {
+  try<E>(mapping: (it: T) => E): Maybe<E> | null {
     return tryOr(() => this.let(mapping), null);
   }
 
@@ -59,12 +62,17 @@ class Maybe<T> {
     return this.try(mapping)?.take() ?? null;
   }
 
-  also(fn: (it: T) => unknown): Maybe<T> {
+  also(fn: (it: T) => unknown): Some<T> {
     fn(this.inner);
     return this;
   }
 
-  take<E>(mapping: (it: T) => E): E;
+  tap(fn: (it: T) => unknown): Some<T> {
+    return this.also(fn);
+  }
+
+  // take<E>(mapping: (it: T) => E): E;
+  take<Fn extends (it: T) => unknown>(mapping: Fn): ReturnType<Fn>
   take(): T;
 
   take<E = T>(mapping?: (it: T) => E): T | E {
