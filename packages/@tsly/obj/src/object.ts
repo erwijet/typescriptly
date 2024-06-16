@@ -208,14 +208,6 @@ class TslyObject<T extends object> {
     return this.inner as unknown as E;
   }
 
-  with<New extends object, Key extends KeyOfType<T, object>>(
-    key: Key,
-    fn: (prev: TslyObject<AssertSubtype<T[Key], object>>) => TslyObject<New>,
-  ): TslyObject<OverrideKeys<T, AssertSubtype<{ [_ in Key]: New }, { [k in keyof T]?: unknown }>>>;
-  with<New, Key extends KeyOfType<T, object>>(
-    key: Key,
-    fn: (prev: TslyObject<AssertSubtype<T[Key], object>>) => New,
-  ): TslyObject<OverrideKeys<T, AssertSubtype<{ [_ in Key]: New }, { [k in keyof T]?: unknown }>>>;
   with<New, Key extends keyof T>(
     key: Key,
     fn: (prev: T[Key]) => New,

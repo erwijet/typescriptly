@@ -166,29 +166,6 @@ describe("with", () => {
     age: 25,
   });
 
-  it("works by passing the selected value as a TslyObject when it's an object", () => {
-    const updated = person.with("name", (name) => {
-      expect(name.take().first).toEqual("john");
-      return name.take().first;
-    });
-
-    expect(updated.take()).toEqual({
-      name: "john",
-      age: 25,
-    });
-  });
-
-  it("auto-unwraps TslyObjects returned from the functor", () => {
-    const updated = person.with("name", (name) => name.with("first", "david"));
-    expect(updated.take()).toEqual({
-      ...person.take(),
-      name: {
-        ...person.take().name,
-        first: "david",
-      },
-    });
-  });
-
   it("works by passing the selected value directly when not an object", () => {
     const updated = person.with("age", (age) => {
       expect(age).toEqual(25);
