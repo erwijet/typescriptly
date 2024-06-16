@@ -147,7 +147,7 @@ class DeepObject<T extends object> {
       else if (obj[kHead] !== undefined) _mutateObj(obj[kHead], kRest.join("."), value);
     };
 
-    const clonedObj = this.into(obj).quickDeepClone().take();
+    const clonedObj = this.take(obj).quickDeepClone().take();
     _mutateObj(clonedObj, key, value);
 
     return deep(clonedObj);
@@ -321,10 +321,6 @@ class DeepObject<T extends object> {
 
   take(mapping?: (it: T) => unknown) {
     return typeof mapping == "function" ? mapping(this.inner) : this.inner;
-  }
-
-  into<E>(mapping: (it: T) => E): E {
-    return this.take(mapping);
   }
 }
 
