@@ -1,4 +1,4 @@
-import { pipe } from "@tsly/core";
+import { AssertSubtype, KeyOfType, pipe } from "@tsly/core";
 
 /** @internal */
 type Entries<T extends object> = NonNullable<{ [k in keyof T]: [k, T[k]] }[keyof T]>[];
@@ -238,6 +238,13 @@ class TslyObject<T extends object> {
     }
 
     return obj({ ...inner, [key]: arg }) as TslyObject<any>;
+  }
+
+  /**
+   * Performs a monadic map operation on the inner value
+   */
+  let<E extends object>(mapping: (it: T) => E): TslyObject<E> {
+    return obj(mapping(this.inner))
   }
 
   take(): T;

@@ -209,3 +209,8 @@ describe("obj.hasNoNullishProps", () => {
     expect(val.name).toEqual("john");
   });
 });
+
+describe("let", () => {
+  const gizmo = { name: "gizmo", extraInfo: { tags: ["tag1", "tag2"] } };
+  expect(obj(gizmo).let((it) => it.extraInfo).keys).toEqual(["tags"]);
+});

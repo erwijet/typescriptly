@@ -276,3 +276,11 @@ describe("update()", () => {
     ).toEqual([5, "orange", "pear"]);
   });
 });
+
+describe("let()", () => {
+  expect(
+    arr([1, 2, 3, 4])
+      .let((inner) => inner.map((it) => it * 2))
+      .take()
+  ).toEqual([2, 4, 6, 8]);
+});

@@ -331,6 +331,13 @@ class TslyArray<T> {
     );
   }
 
+  /**
+   * Performs a monadic map operation on the wrapped array
+   */
+  let<E>(mapping: (it: T[]) => E[]): TslyArray<E> {
+    return arr(mapping(this.inner));
+  }
+
   //
 
   /**
