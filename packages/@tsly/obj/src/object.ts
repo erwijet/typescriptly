@@ -244,7 +244,13 @@ class TslyObject<T extends object> {
    * Performs a monadic map operation on the inner value
    */
   let<E extends object>(mapping: (it: T) => E): TslyObject<E> {
-    return obj(mapping(this.inner))
+    return obj(mapping(this.inner));
+  }
+
+  mapValues<E>(mapping: (value: T[keyof T], key: keyof T) => E): TslyObject<{ [k in keyof T]: E }> {
+    return obj(
+      Object.fromEntries(this.entries.map(([k, v]) => [k, mapping(v, k)])) as { [k in keyof T]: E }
+    );
   }
 
   take(): T;

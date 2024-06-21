@@ -128,6 +128,19 @@ test("get object entries", () => {
   assertNoSideEffects(person, entries);
 });
 
+test("mapValues()", () => {
+  const gizmo = { name: "gizmo", extraInfo: { tags: ["tag1", "tag2"] } };
+
+  expect(
+    obj(gizmo)
+      .mapValues((val, k) => (k == "name" ? val : typeof val))
+      .take()
+  ).toEqual({
+    name: "gizmo",
+    extraInfo: "object",
+  });
+});
+
 test("quick deep clone", () => {
   const gizmo = { name: "gizmo", extraInfo: { tags: ["tag1", "tag2"] } };
 
