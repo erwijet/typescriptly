@@ -1,5 +1,17 @@
 # @tsly/arr
 
+## 1.7.0
+
+### Minor Changes
+
+- 1b4bbdb: Adds `.let`
+
+### Patch Changes
+
+- Updated dependencies [1b4bbdb]
+- Updated dependencies [ef50376]
+  - @tsly/obj@1.4.0
+
 ## 1.6.5
 
 ### Patch Changes

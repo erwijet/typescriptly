@@ -1,5 +1,12 @@
 # @tsly/obj
 
+## 1.4.0
+
+### Minor Changes
+
+- 1b4bbdb: Adds `.let`
+- ef50376: Adds `.mapValues`
+
 ## 1.3.0
 
 ### Minor Changes
